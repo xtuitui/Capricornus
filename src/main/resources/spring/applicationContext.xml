@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Import Properties -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+
+	<!--  Open Spring Scanner, Auto Scanning And Init -->
+	<context:component-scan base-package="com.xiaotuitui.capricornus.application.impl" />
+	<context:component-scan base-package="com.xiaotuitui.capricornus.infrastructure.persistence" />
+
+	<!-- Import DataSource -->
+	<import resource="classpath:spring/spring-dataSource.xml"/>
+
+	<!-- Define Abstract Bean -->
+	<bean id="abstractManagerFactory" abstract="true">
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.jdbc.fetch_size">18</prop>
+				<prop key="hibernate.jdbc.batch_size">10</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Config EntityManagerFactory And Transaction -->
+	<bean id="entityManagerFactory-capricornus" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" parent="abstractManagerFactory">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="persistenceUnit" />
+	</bean>
+	<bean id="transactionManager-capricornus" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory-capricornus" />
+	</bean>
+
+	<!-- Open Transaction Annotation, Flag The @Transactional On Class Or Method To Use Transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager-capricornus" />
+
+</beans>
