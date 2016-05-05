@@ -57,8 +57,9 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 		return createQuery(getEntityManager(), sqlParameters).getResultList();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<T> namedQuery(String name){
-		return getEntityManager().createNamedQuery(name, persistentClass).getResultList();
+		return getEntityManager().createNamedQuery(name).getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
