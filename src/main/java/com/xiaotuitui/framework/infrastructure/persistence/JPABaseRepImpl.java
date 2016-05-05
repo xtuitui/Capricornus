@@ -57,12 +57,29 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 		return createQuery(getEntityManager(), sqlParameters).getResultList();
 	}
 	
+	public List<T> namedQuery(String name){
+		return getEntityManager().createNamedQuery(name, persistentClass).getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> namedQuery(SqlParameters sqlParameters) {
+		return createNamedQuery(getEntityManager(), sqlParameters).getResultList();
+	}
+	
 	public T queryFirstResult(String sql) {
 		return getFirst(query(sql));
 	}
 
 	public T queryFirstResult(SqlParameters sqlParameters) {
 		return getFirst(query(sqlParameters));
+	}
+	
+	public T namedQueryFirstResult(String name) {
+		return getFirst(namedQuery(name));
+	}
+
+	public T namedQueryFirstResult(SqlParameters sqlParameters) {
+		return getFirst(namedQuery(sqlParameters));
 	}
 	
 	private T getFirst(List<T> resultList) {
@@ -83,12 +100,30 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 		return (T) createQuery(getEntityManager(), sqlParameters).getSingleResult();
 	}
 	
+	@SuppressWarnings("unchecked")
+	public T namedQuerySingleResult(String name) {
+		return (T) getEntityManager().createNamedQuery(name).getSingleResult();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public T namedQuerySingleResult(SqlParameters sqlParameters) {
+		return (T) createNamedQuery(getEntityManager(), sqlParameters).getSingleResult();
+	}
+	
 	public List<T> queryByPage(String sql, int pageNumber, int pageSize) {
 		return executeQueryPageResult(getEntityManager().createQuery(sql), pageNumber, pageSize);
 	}
 	
 	public List<T> queryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize) {
 		return executeQueryPageResult(createQuery(getEntityManager(), sqlParameters), pageNumber, pageSize);
+	}
+	
+	public List<T> namedQueryByPage(String name, int pageNumber, int pageSize) {
+		return executeQueryPageResult(getEntityManager().createNamedQuery(name), pageNumber, pageSize);
+	}
+	
+	public List<T> namedQueryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize) {
+		return executeQueryPageResult(createNamedQuery(getEntityManager(), sqlParameters), pageNumber, pageSize);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -106,7 +141,15 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	
 	private Query createQuery(EntityManager entityManager, SqlParameters sqlParameters) {
 		Query query = entityManager.createQuery(sqlParameters.getSqlStringBuilder().toString());
-		Map<String, Object> parameters = sqlParameters.getParameters();
+		return setQueryParameter(query, sqlParameters.getParameters());
+	}
+	
+	private Query createNamedQuery(EntityManager entityManager, SqlParameters sqlParameters){
+		Query query = entityManager.createNamedQuery(sqlParameters.getSqlStringBuilder().toString());
+		return setQueryParameter(query, sqlParameters.getParameters());
+	}
+	
+	private Query setQueryParameter(Query query, Map<String, Object> parameters){
 		Set<String> keySet = parameters.keySet();
 		for(String key:keySet){
 			query.setParameter(key, parameters.get(key));

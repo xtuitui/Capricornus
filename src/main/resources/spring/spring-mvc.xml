@@ -58,11 +58,11 @@
 
 	<!-- <mvc:interceptors >
         <mvc:interceptor>
-            <mvc:mapping path="/filter/**" />
-            <mvc:mapping path="/curator/**" />
-            <mvc:mapping path="/calculator/**" />
-            <mvc:mapping path="/email/**" />
-            <bean class="com.aiatss.mypage.interfaces.interceptor.MyPageInterceptor"></bean>
+            <mvc:mapping path="/xxx/**" />
+            <mvc:mapping path="/yyy/**" />
+            <mvc:mapping path="/zzz/**" />
+            <mvc:mapping path="/vvv/**" />
+            <bean class="com.xiaotuitui.capricornus.interfaces.interceptor.MyPageInterceptor"></bean>
      	</mvc:interceptor>
      </mvc:interceptors> -->
 

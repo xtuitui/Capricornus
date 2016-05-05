@@ -7,10 +7,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tcs_user")
+@NamedQueries(value = {
+		@NamedQuery(name = "User.queryAllUser", query = "from User"),
+		@NamedQuery(name = "User.queryUserByUsername", query = "from User u where u.username = :username"),
+		@NamedQuery(name = "User.queryUserByNickname", query = "from User u where u.nickname like :nickname")
+})
 public class User {
 	
 	@Id
@@ -36,6 +45,7 @@ public class User {
 	@Column(name = "last_login_fail_times")
 	private Integer lastLoginFailTimes;
 	
+	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "last_updated_time", nullable = false)
 	private Date lastUpdatedTime;
 	
@@ -104,6 +114,14 @@ public class User {
 
 	public void setLastUpdatedTime(Date lastUpdatedTime) {
 		this.lastUpdatedTime = lastUpdatedTime;
+	}
+
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", nickname="
+				+ nickname + ", password=" + password + ", email=" + email
+				+ ", loginSuccessTimes=" + loginSuccessTimes
+				+ ", lastLoginFailTimes=" + lastLoginFailTimes
+				+ ", lastUpdatedTime=" + lastUpdatedTime + "]";
 	}
 
 }

@@ -25,16 +25,15 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 	}
 
 	public List<User> queryAllUser() {
-		String sql = "from User";
-		return super.query(sql);
+		return super.namedQuery("User.queryAllUser");
 	}
 
 	public User queryUserByUsername(String username) {
-		StringBuilder sql = new StringBuilder("from User u where u.username = :username");
+		StringBuilder name = new StringBuilder("User.queryUserByUsername");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("username", username);
-		SqlParameters sqlParameters = new SqlParameters(sql, parameters);
-		return super.queryFirstResult(sqlParameters);
+		SqlParameters sqlParameters = new SqlParameters(name, parameters);
+		return super.namedQueryFirstResult(sqlParameters);
 	}
 
 	public void deleteUser(User user) {
@@ -42,11 +41,11 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 	}
 
 	public List<User> queryUserByNickname(String nickname) {
-		StringBuilder sql = new StringBuilder("from User u where u.nickname like :nickname");
+		StringBuilder name = new StringBuilder("User.queryUserByNickname");
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("nickname", "%"+nickname+"%");
-		SqlParameters sqlParameters = new SqlParameters(sql, parameters);
-		return super.query(sqlParameters);
+		SqlParameters sqlParameters = new SqlParameters(name, parameters);
+		return super.namedQuery(sqlParameters);
 	}
 
 	public User createUser(User user) {
