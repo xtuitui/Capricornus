@@ -1,8 +1,6 @@
 package com.xiaotuitui.capricornus.infrastructure.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,10 +27,7 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 	}
 
 	public User queryUserByUsername(String username) {
-		StringBuilder name = new StringBuilder("User.queryUserByUsername");
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("username", username);
-		SqlParameters sqlParameters = new SqlParameters(name, parameters);
+		SqlParameters sqlParameters = new SqlParameters("User.queryUserByUsername", new String[]{"username"}, new Object[]{username});
 		return super.namedQueryFirstResult(sqlParameters);
 	}
 
@@ -41,10 +36,7 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 	}
 
 	public List<User> queryUserByNickname(String nickname) {
-		StringBuilder name = new StringBuilder("User.queryUserByNickname");
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("nickname", "%"+nickname+"%");
-		SqlParameters sqlParameters = new SqlParameters(name, parameters);
+		SqlParameters sqlParameters = new SqlParameters("User.queryUserByNickname", new String[]{"nickname"}, new Object[]{"%"+nickname+"%"});
 		return super.namedQuery(sqlParameters);
 	}
 
