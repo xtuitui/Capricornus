@@ -6,6 +6,9 @@
 		<meta charset="utf-8" />
 	</head>
 	<body>
-		<div><h1>Hello Capricornus</h1></div>
+		<div>
+			<h1>Hello Capricornus</h1>
+			<h1><a href="index/toLogin">登录</a></h1>
+		</div>
 	</body>
 </html>
