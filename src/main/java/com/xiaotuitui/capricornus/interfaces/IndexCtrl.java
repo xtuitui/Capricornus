@@ -38,8 +38,18 @@ public class IndexCtrl extends BaseCtrl{
 				ajaxError(request, response);
 			}else{
 				doSession(request, session, user);
+				doCookie(request, response, user);
 				ajaxSuccess(request, response);
 			}
+		}
+	}
+	
+	private void doCookie(HttpServletRequest request, HttpServletResponse response, User user){
+		String rememberMe = request.getParameter("rememberMe");
+		if(Constant.TRUE.equalsIgnoreCase(rememberMe)){
+			Cookie cookie = new Cookie(Constant.USER_NAME, user.getUsername());
+			cookie.setMaxAge(30*24*60*60);
+			response.addCookie(cookie);
 		}
 	}
 
@@ -55,6 +65,11 @@ public class IndexCtrl extends BaseCtrl{
 		}
 		session = request.getSession(true);
 		session.setAttribute(Constant.USER, user);
+	}
+	
+	@RequestMapping(value = "/toWelcome", method = RequestMethod.GET)
+	public String toWelcome(){
+		return "/index/welcome";
 	}
 
 }

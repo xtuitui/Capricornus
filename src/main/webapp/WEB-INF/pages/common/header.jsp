@@ -8,3 +8,4 @@
 <link rel="alternate icon" type="image/png" href="${path}/static/capricornus/image/favicon.ico">
 <link rel="stylesheet" href="${path}/static/assets/css/amazeui.min.css"/>
 <script type="text/javascript" lang="javascript" src="${path}/static/assets/js/jquery.min.js"></script>
+<script type="text/javascript" lang="javascript" src="${path}/static/assets/js/amazeui.min.js"></script>
