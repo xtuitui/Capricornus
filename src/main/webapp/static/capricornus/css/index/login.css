@@ -15,3 +15,7 @@
 .am-checkbox{
 	display: inline-block;
 }
+
+#username, #password, #loginMessage div{
+	border-radius: 5px;
+}
