@@ -19,3 +19,9 @@
 #username, #password, #loginMessage div{
 	border-radius: 5px;
 }
+
+body {
+	background-image: url(../../image/background.jpg);
+	background-size:100% 100%;
+	-moz-background-size:100% 100%;
+}

@@ -6,7 +6,7 @@
 		<title>Login</title>
 		<%@include file="/WEB-INF/pages/common/header.jsp"%>
 		<link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/index/login.css"/>
-		<script type="text/javascript" lang="javascript">
+		<script type="text/javascript">
 			function login(){
 				var username = $("#username").val();
 				var password = $("#password").val();
@@ -40,6 +40,7 @@
 		</script>
 	</head>
 	<body>
+		<%@include file="/WEB-INF/pages/common/loader1.jsp"%>
 		<div class="header">
 			<div class="am-g">
 		    	<h1>Capricornus</h1>
