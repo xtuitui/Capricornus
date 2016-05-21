@@ -10,6 +10,19 @@
 			$("#loading").fadeOut(500);
 		});
 	}
+	
+	function resetMenuToggleHeight(){
+		var headerHeight;
+		if($("#phoneBar").is(":hidden")){
+			headerHeight = $("#header-toolbar").css("height");
+		}else{
+			headerHeight = $("#phoneBar").css("height");
+		}
+		var menuHeight = $(".menu_toggle").css("top");
+		if(menuHeight!=headerHeight){
+			$(".menu_toggle").css("top", headerHeight);
+		}
+	}
 </script>
 <div class="page">
 	  <span class="menu_toggle">
@@ -21,35 +34,20 @@
 	    <li><a href="#"><i class="icon am-icon-group am-icon-md"></i> Group Management</a></li>
 	  </ul>
 	  <div class="content">
-	    <div id="dynamicContent" class="content_inner" style="overflow-y: auto;">
-	    
-	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    
-	    	    <p>adasdasdasd</p>
-	    <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-	    </div>
+	    <div id="dynamicContent" class="content_inner"></div>
 	  </div>
 </div>
 <script type="text/javascript">
-showDynamicContent("${path}/user/management/toUser");
-var $page = $('.page');
-$('.menu_toggle').on('click', function () {
-    $page.toggleClass('shazam');
-});
-$('.content').on('click', function () {
-    $page.removeClass('shazam');
-});
+	showDynamicContent("${path}/user/management/toUser");
+	$(window).resize(function(){
+		resetMenuToggleHeight();
+	});
+	var $page = $('.page');
+	$('.menu_toggle').on('click', function () {
+	    $page.toggleClass('shazam');
+	});
+	$('.content').on('click', function () {
+	    $page.removeClass('shazam');
+	});
+	resetMenuToggleHeight();
 </script>

@@ -15,6 +15,9 @@
 		
 		function showDynamicBody(elementId, url){
 			$("#" + elementId).dropdown("close");
+			if(!$("#phoneBar").is(":hidden")){
+				$("#topbar-collapse").collapse("close");
+			}
 			$("#loading").fadeIn(500);
 			$.get(url, {}, function(data){
 				$("#dynamicBody").html(data);
@@ -25,7 +28,7 @@
 	</head>
 	<body>
 		<%@include file="/WEB-INF/pages/common/loader1.jsp"%>
-		<header id="header-toolbar" class="am-topbar am-topbar-inverse admin-header">
+		<header id="header-toolbar" class="am-topbar am-topbar-inverse admin-header am-header-fixed">
 			<div id="phoneBar" class="am-show-sm-only">
 				<a href="${path}/index/toWelcome" class="am-icon-home am-icon-sm"></a>
 				<span id="titleSpan"><b>Capricornus</b></span>
