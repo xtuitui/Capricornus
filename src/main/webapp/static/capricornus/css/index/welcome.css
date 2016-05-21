@@ -1,5 +1,6 @@
 #header-toolbar {
 	margin-bottom: 0px;
+	z-index: 10;
 }
 
 #phoneBar {

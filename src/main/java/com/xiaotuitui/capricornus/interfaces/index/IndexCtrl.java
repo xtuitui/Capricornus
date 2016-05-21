@@ -1,4 +1,4 @@
-package com.xiaotuitui.capricornus.interfaces;
+package com.xiaotuitui.capricornus.interfaces.index;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

@@ -12,6 +12,15 @@
 				$.AMUI.fullscreen.toggle();
 		    });
 		});
+		
+		function showDynamicBody(elementId, url){
+			$("#" + elementId).dropdown("close");
+			$("#loading").fadeIn(500);
+			$.get(url, {}, function(data){
+				$("#dynamicBody").html(data);
+				$("#loading").fadeOut(500);
+			});
+		}
 		</script>
 	</head>
 	<body>
@@ -84,14 +93,14 @@
 		      		</li>
 		    	</ul>
 		    	<ul id="subToolbar-right" class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
-				    <li><a href="javascript:;"><span class="am-icon-question-circle"></span> Help </a></li>
-		      		<li class="am-dropdown" data-am-dropdown>
+				    <li><a href="#"><span class="am-icon-question-circle"></span> Help </a></li>
+		      		<li id="settingDropDown" class="am-dropdown" data-am-dropdown>
 		        		<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
 		          			<span class="am-icon-cogs"></span> Setting <span class="am-icon-caret-down"></span>
 		        		</a>
 		        		<ul class="am-dropdown-content">
 							<li><a href="#"><span class="am-icon-database"></span> Project Management</a></li>
-							<li><a href="#"><span class="am-icon-users"></span> User Management</a></li>
+							<li><a href="javascript:showDynamicBody('settingDropDown', '${path}/user/management/toUserManagement');"><span class="am-icon-users"></span> User Management</a></li>
 							<li><a href="#"><span class="am-icon-gavel"></span> Project Configuration</a></li>
 							<li><a href="#"><span class="am-icon-cog"></span> System Configuration</a></li>
 		        		</ul>
@@ -111,8 +120,6 @@
 	    		</ul>
 		  	</div>
 		</header>
-		<div>
-			<iframe src="" width="100%" height="100%"></iframe>
-		</div>
+		<div id="dynamicBody"></div>
 	</body>
 </html>
