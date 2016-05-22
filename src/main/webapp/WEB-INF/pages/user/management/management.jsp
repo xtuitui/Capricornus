@@ -21,6 +21,7 @@
 		var menuHeight = $(".menu_toggle").css("top");
 		if(menuHeight!=headerHeight){
 			$(".menu_toggle").css("top", headerHeight);
+			$("#dynamicContent").css("margin-top", headerHeight);
 		}
 	}
 </script>
