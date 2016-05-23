@@ -77,8 +77,10 @@
 			      </div>
 			    </form>
 		    	<hr>
-		    	<p>Copyright &copy; 2016 XiaoTuiTui, Inc.</p>
 		  	</div>
+			<div class="login-footer">
+		    	<%@include file="/WEB-INF/pages/common/footer.jsp"%>
+			</div>
 		</div>
 		<div id="loginMessage" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
 		  <div class="am-modal-dialog">

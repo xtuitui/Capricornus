@@ -20,6 +20,10 @@
 	border-radius: 5px;
 }
 
+.login-footer{
+	margin-top:-25px;margin-left: 25%;
+}
+
 body {
 	background-image: url(../../image/background.jpg);
 	background-repeat: no-repeat;

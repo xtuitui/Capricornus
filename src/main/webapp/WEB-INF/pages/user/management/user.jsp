@@ -43,7 +43,7 @@
 				<strong class="am-text-primary am-text-lg">User Management</strong>
 			</div>
 		</div>
-		<hr>
+		<br/>
 		<div class="am-g">
 			<div class="am-u-sm-12 am-u-md-2">
 				<div class="am-form-group">
@@ -134,23 +134,19 @@
 				</table>
 				<div class="am-cf">
 					共 15 条记录
-					<div class="am-fr">
-						<ul class="am-pagination">
-							<li class="am-disabled"><a href="#">«</a></li>
-							<li class="am-active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">»</a></li>
-						</ul>
+					<div class="dataTables_paginate">
+						<a class="paginate_button disabled">First</a>
+						<a class="paginate_button disabled">Previous</a>
+						<span>
+							<a class='paginate_button current'>1</a>
+							<a class='paginate_button'>2</a>
+						</span>
+						<a class="paginate_button">Next</a>
+						<a class="paginate_button">Last</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<footer class="admin-content-footer">
-		<hr>
-		<p class="am-padding-left">Copyright &copy; 2016 XiaoTuiTui, Inc.</p>
-	</footer>
 </div>
+<%@include file="/WEB-INF/pages/common/footer.jsp"%>

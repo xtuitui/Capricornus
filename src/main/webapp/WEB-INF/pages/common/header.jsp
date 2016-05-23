@@ -8,6 +8,7 @@
 <link rel="alternate icon" type="image/png" href="${path}/static/capricornus/image/favicon.ico">
 <link rel="stylesheet" href="${path}/static/assets/css/amazeui.min.css"/>
 <link rel="stylesheet" href="${path}/static/select2/css/select2.css"/>
+<link rel="stylesheet" href="${path}/static/paginate/css/jquery.datatables.css"/>
 <script type="text/javascript" src="${path}/static/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${path}/static/assets/js/amazeui.min.js"></script>
 <script type="text/javascript" src="${path}/static/select2/js/select2.min.js"></script>
