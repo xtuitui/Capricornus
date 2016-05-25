@@ -303,6 +303,5 @@ jacocoTestReport.dependsOn integrationTest
 jacocoIntegrationTestReport.dependsOn jacocoTestReport
 check.dependsOn jacocoIntegrationTestReport
 
-projectReport.dependsOn jacocoIntegrationTestReport
 buildDashboard.dependsOn projectReport
 check.dependsOn buildDashboard

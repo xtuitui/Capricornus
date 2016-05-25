@@ -23,6 +23,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
 				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
 				<prop key="hibernate.max_fetch_depth">3</prop>
 				<prop key="hibernate.jdbc.fetch_size">18</prop>
 				<prop key="hibernate.jdbc.batch_size">10</prop>
