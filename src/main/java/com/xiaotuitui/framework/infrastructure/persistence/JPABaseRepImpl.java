@@ -36,7 +36,7 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	}
 
 	public void remove(Serializable id) {
-		this.remove(find(id));
+		this.remove(getReference(id));
 	}
 	
 	public T find(Serializable id) {

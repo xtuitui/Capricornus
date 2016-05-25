@@ -9,7 +9,7 @@
 		});
 		
 		$(".select2").select2({
-			width: "100%" ,
+			width: "150%" ,
 			placeholder: "Default Option" ,
 			maximumInputLength: 20 ,
 			//minimumResultsForSearch: Infinity
@@ -61,18 +61,10 @@
 				<div class="am-form-group">
 					<label for="group" class="am-form-label">Group</label>
 					<select id="group" class="am-radius select2">
-						<option value=""></option>
-						<option value="*">All</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">Zambia</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
+						<option value="">All</option>
+						<c:forEach var="group" items="${groupList}">
+							<option value="${group.id}">${group.name}</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

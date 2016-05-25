@@ -75,6 +75,7 @@ public class BaseCtrl {
     
     @ExceptionHandler(value = {Exception.class})
 	protected void handleException(HttpServletRequest request, HttpServletResponse response, Exception exception){
+    	exception.printStackTrace();
     	ajaxError(request, response);
     }
     
