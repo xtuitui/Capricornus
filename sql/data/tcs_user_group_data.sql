@@ -1,18 +1,10 @@
-delete from tcs_group where name = 'capricornus-administrator';
+select @capricornus_admin_id := id from tcs_user where username = 'admin';
+select @capricornus_admin_group_id := id from tcs_group where name = 'capricornus-administrator';
+select @capricornus_developer_group_id := id from tcs_group where name = 'capricornus-developer';
+select @capricornus_user_group_id := id from tcs_group where name = 'capricornus-user';
 
-insert into tcs_group(name, description) 
-values(N'capricornus-administrator', N'This is capricornus default group - capricornus-administrator.');
+delete from tcs_user_group where user_id = @capricornus_admin_id;
 
-
-
-delete from tcs_group where name = 'capricornus-developer';
-
-insert into tcs_group(name, description) 
-values(N'capricornus-developer', N'This is capricornus default group - capricornus-developer.');
-
-
-
-delete from tcs_group where name = 'capricornus-user';
-
-insert into tcs_group(name, description) 
-values(N'capricornus-user', N'This is capricornus default group - capricornus-user.');
+insert into tcs_user_group(user_id, group_id) values(@capricornus_admin_id, @capricornus_admin_group_id);
+insert into tcs_user_group(user_id, group_id) values(@capricornus_admin_id, @capricornus_developer_group_id);
+insert into tcs_user_group(user_id, group_id) values(@capricornus_admin_id, @capricornus_user_group_id);

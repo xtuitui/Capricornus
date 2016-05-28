@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaotuitui.capricornus.application.UserSrv;
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
+import com.xiaotuitui.capricornus.util.dto.UserDto;
+import com.xiaotuitui.framework.util.page.PageObject;
 
 @Service
 public class UserSrvImpl implements UserSrv{
@@ -43,6 +45,10 @@ public class UserSrvImpl implements UserSrv{
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public User createUser(User user) {
 		return userRep.createUser(user);
+	}
+
+	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject) {
+		return userRep.queryUserByPage(userDto, pageObject);
 	}
 
 }

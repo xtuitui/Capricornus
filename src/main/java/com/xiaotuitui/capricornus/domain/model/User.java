@@ -1,14 +1,20 @@
 package com.xiaotuitui.capricornus.domain.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,6 +54,14 @@ public class User {
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(name = "last_updated_time", nullable = false)
 	private Date lastUpdatedTime;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "tcs_user_group", 
+			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
+			inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+	)
+	@OrderBy(value = "id asc")
+	private List<Group> groups;
 	
 	public User() {
 	}
@@ -114,6 +128,14 @@ public class User {
 
 	public void setLastUpdatedTime(Date lastUpdatedTime) {
 		this.lastUpdatedTime = lastUpdatedTime;
+	}
+
+	public List<Group> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 	public String toString() {

@@ -1,16 +1,21 @@
 package com.xiaotuitui.capricornus.infrastructure.persistence;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Repository;
 
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
+import com.xiaotuitui.capricornus.util.dto.UserDto;
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.infrastructure.persistence.JPABaseRepImpl;
+import com.xiaotuitui.framework.util.page.PageObject;
 
 @Repository
 public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
@@ -42,6 +47,42 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 
 	public User createUser(User user) {
 		return super.create(user);
+	}
+
+	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject) {
+		SqlParameters sqlParameters = buildSqlParameters(userDto);
+		return super.queryByPage(sqlParameters, pageObject);
+	}
+
+	private SqlParameters buildSqlParameters(UserDto userDto) {
+		StringBuilder sqlStringBuilder = new StringBuilder();
+		sqlStringBuilder.append("select distinct u from User u");
+		Integer groupId = userDto.getGroupId();
+		if(groupId!=null){
+			sqlStringBuilder.append(" join u.groups g");
+		}
+		sqlStringBuilder.append(" where 1=1");
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		String username = userDto.getUsername();
+		String nickname = userDto.getNickname();
+		String email = userDto.getEmail();
+		if(!StringUtils.isBlank(username)){
+			sqlStringBuilder.append(" and u.username like :username");
+			parameters.put("username", "%"+username+"%");
+		}
+		if(!StringUtils.isBlank(nickname)){
+			sqlStringBuilder.append(" and u.nickname like :nickname");
+			parameters.put("nickname", "%"+nickname+"%");
+		}
+		if(!StringUtils.isBlank(email)){
+			sqlStringBuilder.append(" and u.email like :email");
+			parameters.put("email", "%"+email+"%");
+		}
+		if(groupId!=null){
+			sqlStringBuilder.append(" and g.id = :groupId");
+			parameters.put("groupId", groupId);
+		}
+		return new SqlParameters(sqlStringBuilder, parameters);
 	}
 
 }

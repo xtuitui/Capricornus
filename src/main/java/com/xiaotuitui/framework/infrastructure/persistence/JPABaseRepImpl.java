@@ -11,6 +11,7 @@ import javax.persistence.Query;
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.domain.repository.JPABaseRep;
 import com.xiaotuitui.framework.util.beanutil.ReflectUtil;
+import com.xiaotuitui.framework.util.page.PageObject;
 
 public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 
@@ -111,25 +112,43 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 		return (T) createNamedQuery(getEntityManager(), sqlParameters).getSingleResult();
 	}
 	
-	public List<T> queryByPage(String sql, int pageNumber, int pageSize) {
-		return executeQueryPageResult(getEntityManager().createQuery(sql), pageNumber, pageSize);
+	public List<T> queryByPage(String sql, PageObject pageObject) {
+		executeQueryTotalRecord(sql, pageObject);
+		return executeQueryPageResult(getEntityManager().createQuery(sql), pageObject);
 	}
 	
-	public List<T> queryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize) {
-		return executeQueryPageResult(createQuery(getEntityManager(), sqlParameters), pageNumber, pageSize);
+	public List<T> queryByPage(SqlParameters sqlParameters, PageObject pageObject) {
+		executeQueryTotalRecord(sqlParameters, pageObject);
+		return executeQueryPageResult(createQuery(getEntityManager(), sqlParameters), pageObject);
 	}
 	
-	public List<T> namedQueryByPage(String name, int pageNumber, int pageSize) {
-		return executeQueryPageResult(getEntityManager().createNamedQuery(name), pageNumber, pageSize);
+	/**
+	 * Can not get the sql, so can not set the page object, need to query the totalRecord manually
+	 */
+	public List<T> namedQueryByPage(String name, PageObject pageObject) {
+		return executeQueryPageResult(getEntityManager().createNamedQuery(name), pageObject);
 	}
 	
-	public List<T> namedQueryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize) {
-		return executeQueryPageResult(createNamedQuery(getEntityManager(), sqlParameters), pageNumber, pageSize);
+	public List<T> namedQueryByPage(SqlParameters sqlParameters, PageObject pageObject) {
+		executeQueryTotalRecord(sqlParameters, pageObject);
+		return executeQueryPageResult(createNamedQuery(getEntityManager(), sqlParameters), pageObject);
 	}
 	
+	private void executeQueryTotalRecord(String sql, PageObject pageObject){
+		SqlParameters sqlParameters = new SqlParameters(sql, null);
+		executeQueryTotalRecord(sqlParameters, pageObject);
+	}
+	
+	private void executeQueryTotalRecord(SqlParameters sqlParameters, PageObject pageObject){
+		Long totalRecord = this.count(sqlParameters);
+		pageObject.setTotalRecord(totalRecord);
+	}
+
 	@SuppressWarnings("unchecked")
-	private List<T> executeQueryPageResult(Query query, int pageNumber, int pageSize){
-		return query.setFirstResult((pageNumber - 1) * pageSize).setMaxResults(pageSize).getResultList();
+	private List<T> executeQueryPageResult(Query query, PageObject pageObject){
+		int currentPage = pageObject.getCurrentPage().intValue();
+		int pageSize = PageObject.getPageSize();
+		return query.setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize).getResultList();
 	}
 	
 	public long count(SqlParameters sqlParameters) {
@@ -151,6 +170,9 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	}
 	
 	private Query setQueryParameter(Query query, Map<String, Object> parameters){
+		if(parameters==null){
+			return query;
+		}
 		Set<String> keySet = parameters.keySet();
 		for(String key:keySet){
 			query.setParameter(key, parameters.get(key));
@@ -164,6 +186,9 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 		sql_from_ex = sql_from_ex.replaceAll("select", "");
 		sql_from_ex = sql_from_ex.replaceAll("distinct", "");
 		sql_from_ex = sql_from_ex.trim();
+		if("".equals(sql_from_ex)){
+			sql_from_ex = "*";
+		}
 		String sql_where_rear = "";
 		int beginIndex_where = sql.toString().indexOf("where");
 		if (beginIndex_where != -1) {

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.xiaotuitui.framework.domain.model.SqlParameters;
+import com.xiaotuitui.framework.util.page.PageObject;
 
 public interface JPABaseRep<T>{
 	
@@ -43,13 +44,13 @@ public interface JPABaseRep<T>{
 	
 	public T namedQuerySingleResult(SqlParameters sqlParameters);
 
-	public List<T> queryByPage(String sql, int pageNumber, int pageSize);
+	public List<T> queryByPage(String sql, PageObject pageObject);
 	
-	public List<T> queryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize);
+	public List<T> queryByPage(SqlParameters sqlParameters, PageObject pageObject);
 	
-	public List<T> namedQueryByPage(String name, int pageNumber, int pageSize);
+	public List<T> namedQueryByPage(String name, PageObject pageObject);
 	
-	public List<T> namedQueryByPage(SqlParameters sqlParameters, int pageNumber, int pageSize);
+	public List<T> namedQueryByPage(SqlParameters sqlParameters, PageObject pageObject);
 	
 	public long count(SqlParameters sqlParameters);
 	

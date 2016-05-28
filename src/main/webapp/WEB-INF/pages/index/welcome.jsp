@@ -18,10 +18,8 @@
 			if(!$("#phoneBar").is(":hidden")){
 				$("#topbar-collapse").collapse("close");
 			}
-			$("#loading").fadeIn(500);
 			$.get(url, {}, function(data){
 				$("#dynamicBody").html(data);
-				$("#loading").fadeOut(500);
 			});
 		}
 		</script>
