@@ -3,6 +3,10 @@
 	background-color: #584E4A;
 }
 
+.sidemenu-body-backgorund-color{
+	background-color: #584E4A;
+}
+
 .content {
 	height: 200%;
 	-webkit-transform-origin: top left;
@@ -12,7 +16,6 @@
 		cubic-bezier(1, 0.005, 0.24, 1);
 	transition: transform 0.7s cubic-bezier(1, 0.005, 0.24, 1);
 	background-color: #f0f0f0;
-	position: relative;
 	z-index: 5;
 }
 
@@ -204,8 +207,4 @@
 .shazam .menu_items li:nth-child(3) {
 	-webkit-transition-delay: .48s;
 	transition-delay: .48s;
-}
-
-body {
-	color: #584E4A;
 }

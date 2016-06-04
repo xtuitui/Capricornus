@@ -1,5 +1,7 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/pages/common/common.jsp"%>
+<link type="text/css" rel="stylesheet" href="${path}/static/switch/css/switch.css"/>
+<link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/common/tooltip.css"/>
 <link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/user/management/user.css"/>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -53,6 +55,74 @@
 		});
 	}
 	
+	function showAddUserModal(){
+		$("#addUserButton").button("loading");
+		$("#addUsername").val("");
+		$("#addNickname").val("");
+		$("#addPassword").val("");
+		$("#addPasswordConfirm").val("");
+		$("#addEmail").val("");
+		$("#invite").prop("checked", false);
+		$("#addUserModal").modal({
+			"onConfirm": function(){
+				saveUser();
+			}, 
+			"closeOnConfirm": false
+		});
+		$("#addUserButton").button("reset");
+	}
+	
+	function saveUser(){
+		$("#cancelUserButton").hide().removeClass("am-modal-btn");
+		$("#saveUserButton").button("loading");
+		var result = checkParamBeforeSubmit();
+		if(result===false){
+			$("#saveUserButton").button("reset");
+			$("#cancelUserButton").addClass("am-modal-btn").show();
+		}else{
+			alert("有待添加");
+			$("#saveUserButton").button("reset");
+			$("#cancelUserButton").addClass("am-modal-btn").show();
+			$("#addUserModal").modal("close");
+		}
+	}
+	
+	function checkParamBeforeSubmit(){
+		var username = $("#addUsername").val();
+		var nickname = $("#addNickname").val();
+		var password = $("#addPassword").val();
+		var passwordConfirm = $("#addPasswordConfirm").val();
+		var email = $("#addEmail").val();
+		var invite = "";
+		var topOffset = $("#vldTooltip").parent().offset().left;
+		if($.trim(username)==""){
+			showTooltip("vldTooltip", "addUsername", "用户名不能为空", -topOffset, -10);
+			$("#addUsername").focus();
+			return false;
+		}
+		if($.trim(password)==""){
+			showTooltip("vldTooltip", "addPassword", "密文不能为空", -topOffset, -10);
+			$("#addPassword").focus();
+			return false;
+		}
+		if(passwordConfirm!=password){
+			showTooltip("vldTooltip", "addPasswordConfirm", "密文不一致", -topOffset, -10);
+			$("#addPasswordConfirm").focus();
+			return false;
+		}
+		if($.trim(email)==""){
+			showTooltip("vldTooltip", "addEmail", "邮箱不能为空", -topOffset, -10);
+			$("#addEmail").focus();
+			return false;
+		}
+		if($("#invite").prop("checked")){
+			invite = "y";
+		}else{
+			invite = "n";
+		}
+		return {"username":username, "nickname":nickname, "password":password, "email":email, "invite":invite};
+	}
+	
 	function paginate(currentPage){
 		searchUser(currentPage);
 	}
@@ -102,14 +172,78 @@
 				</button>
 			</div>
 			<div class="am-u-sm-12 am-u-md-1 am-u-end">
-				<button id="addUserButton" type="button" class="am-btn am-btn-default am-round" data-am-loading="{spinner:'spinner', loadingText:'Adding...'}">
+				<button id="addUserButton" type="button" class="am-btn am-btn-default am-round" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showAddUserModal();">
 					<i class="am-icon-user-plus"></i>
 					Add User
 				</button>
 			</div>
 		</div>
-
 		<div id="userTable" class="am-g"></div>
+	</div>
+</div>
+<div id="addUserModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">
+			添加用户
+			<a href="javascript:;" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		</div>
+		<hr/>
+		<div class="modal-description">
+			<div>&nbsp;&nbsp;欢迎使用Capricornus!<br/>&nbsp;&nbsp;您现在可以创建用户, 请在创建成功后授予相应的权限. <br/>&nbsp;&nbsp;谢谢支持...</div>
+		</div>
+		<hr/>
+		<div class="am-modal-bd">
+			<div class="am-u-sm-12 am-u-end" style="position: relative;left: 0px;">
+				<form class="am-form am-form-horizontal form-radius">
+					<div class="am-form-group">
+						<label for="addUsername" class="am-u-sm-4 am-form-label">用户 / Username</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="addUsername" type="text" placeholder="Username" maxlength="20"/>
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label for="addNickname" class="am-u-sm-4 am-form-label">昵称 / Nickname</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="addNickname" type="text" placeholder="Nickname" maxlength="40" />
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label for="addPassword" class="am-u-sm-4 am-form-label">密码 / Password</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="addPassword" type="password" placeholder="Password" maxlength="16"/>
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label for="addPasswordConfirm" class="am-u-sm-4 am-form-label">确认 / Confirm</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="addPasswordConfirm" type="password" placeholder="Confirm Password" maxlength="16"/>
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label for="addEmail" class="am-u-sm-4 am-form-label">邮箱 / Email</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="addEmail" type="text" placeholder="Email@xiaotuitui.com" maxlength="50"/>
+						</div>
+            		</div>
+            		<div class="am-form-group">
+						<label for="invite" class="am-u-sm-4 am-form-label">邀请 / Invite</label>
+						<div class="am-u-sm-8 am-u-end">
+							<div class="model-13">
+								<div class="checkbox">
+									<input id="invite" type="checkbox" value="y"/><label></label>
+								</div>
+							</div>
+						</div>
+            		</div>
+				</form>
+			</div>
+		</div>
+		<hr class="footer-hr"/>
+		<div class="am-modal-footer">
+			<span id="cancelUserButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
+			<span id="saveUserButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
+		</div>
+		<div id="vldTooltip" class="vld-tooltip"></div>
 	</div>
 </div>
 <%@include file="/WEB-INF/pages/common/footer.jsp"%>

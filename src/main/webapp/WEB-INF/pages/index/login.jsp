@@ -29,14 +29,6 @@
 					login();
 				}
 			}
-			
-			function closeModal(obj, event){
-				event = window.event||event;
-				if($(event.target).attr("id")==$(obj).attr("id")){
-					$(obj).modal("close");
-					$("#username").focus();
-				}
-			}
 		</script>
 	</head>
 	<body>

@@ -8,6 +8,7 @@
 		$.get(url, {}, function(data){
 			$("#dynamicContent").html(data);
 			$("#loading").fadeOut(500);
+			$("body").removeClass('sidemenu-body-backgorund-color');
 		});
 	}
 	
@@ -45,10 +46,12 @@
 	});
 	var $page = $('.page');
 	$('.menu_toggle').on('click', function () {
+		$("body").toggleClass('sidemenu-body-backgorund-color');
 	    $page.toggleClass('shazam');
 	});
 	$('.content').on('click', function () {
 	    $page.removeClass('shazam');
+	    $("body").removeClass('sidemenu-body-backgorund-color');
 	});
 	resetMenuToggleHeight();
 </script>

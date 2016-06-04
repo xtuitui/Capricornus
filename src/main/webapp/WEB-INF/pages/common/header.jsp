@@ -12,3 +12,4 @@
 <script type="text/javascript" src="${path}/static/assets/js/jquery.min.js"></script>
 <script type="text/javascript" src="${path}/static/assets/js/amazeui.min.js"></script>
 <script type="text/javascript" src="${path}/static/select2/js/select2.min.js"></script>
+<script type="text/javascript" src="${path}/static/capricornus/js/common/common.js"></script>
