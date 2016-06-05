@@ -73,30 +73,38 @@
 	}
 	
 	function saveUser(){
-		$("#cancelUserButton").hide().removeClass("am-modal-btn");
-		$("#saveUserButton").button("loading");
+		modalButtonLoading();
 		var result = checkParamBeforeSubmit();
 		if(result===false){
-			$("#saveUserButton").button("reset");
-			$("#cancelUserButton").addClass("am-modal-btn").show();
+			modalButtonReset();
 		}else{
 			$.post("${path}/user/management/addUser", result, function(data){
 				if(data.result=="success"){
 					//need to go user profile page
-					$("#saveUserButton").button("reset");
-					$("#cancelUserButton").addClass("am-modal-btn").show();
+					modalButtonReset();
 					$("#addUserModal").modal("close");
 				}else{
 					var messageCode = data.data;
 					if(messageCode=="uae"){
-						showTooltip("vldTooltip", "addUsername", "用户名已经存在", -10, -$("#vldTooltip").parent().offset().left);
+						var topOffset = $("#vldTooltip").parent().offset().top;
+						var leftOffset = $("#vldTooltip").parent().offset().left;
+						showTooltip("vldTooltip", "addUsername", "用户名已经存在", 30 - topOffset, -leftOffset);
 						$("#addUsername").focus();
-						$("#saveUserButton").button("reset");
-						$("#cancelUserButton").addClass("am-modal-btn").show();
+						modalButtonReset();
 					}
 				}
 			});
 		}
+	}
+	
+	function modalButtonLoading(){
+		$("#cancelUserButton").hide().removeClass("am-modal-btn");
+		$("#saveUserButton").button("loading");
+	}
+	
+	function modalButtonReset(){
+		$("#saveUserButton").button("reset");
+		$("#cancelUserButton").addClass("am-modal-btn").show();
 	}
 	
 	function checkParamBeforeSubmit(){
@@ -105,24 +113,25 @@
 		var password = $("#addPassword").val();
 		var passwordConfirm = $("#addPasswordConfirm").val();
 		var email = $.trim($("#addEmail").val());
+		var topOffset = $("#vldTooltip").parent().offset().top;
 		var leftOffset = $("#vldTooltip").parent().offset().left;
 		if($.trim(username)==""){
-			showTooltip("vldTooltip", "addUsername", "用户名不能为空", -10, -leftOffset);
+			showTooltip("vldTooltip", "addUsername", "用户名不能为空", 30 - topOffset, -leftOffset);
 			$("#addUsername").focus();
 			return false;
 		}
 		if($.trim(password)==""){
-			showTooltip("vldTooltip", "addPassword", "密文不能为空", -10, -leftOffset);
+			showTooltip("vldTooltip", "addPassword", "密文不能为空", 30 - topOffset, -leftOffset);
 			$("#addPassword").focus();
 			return false;
 		}
 		if(passwordConfirm!=password){
-			showTooltip("vldTooltip", "addPasswordConfirm", "密文不一致", -10, -leftOffset);
+			showTooltip("vldTooltip", "addPasswordConfirm", "密文不一致", 30 - topOffset, -leftOffset);
 			$("#addPasswordConfirm").focus();
 			return false;
 		}
 		if($.trim(email)==""){
-			showTooltip("vldTooltip", "addEmail", "邮箱不能为空", -10, -leftOffset);
+			showTooltip("vldTooltip", "addEmail", "邮箱不能为空", 30 - topOffset, -leftOffset);
 			$("#addEmail").focus();
 			return false;
 		}

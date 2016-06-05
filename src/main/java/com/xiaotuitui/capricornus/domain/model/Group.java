@@ -12,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tcs_group")
 @NamedQueries(value = {
-		@NamedQuery(name = "Group.queryAllGroup", query = "from Group")
+		@NamedQuery(name = "Group.queryAllGroup", query = "from Group"),
+		@NamedQuery(name = "Group.queryGroupByName", query = "from Group g where g.name = :name")
 })
 public class Group {
 	

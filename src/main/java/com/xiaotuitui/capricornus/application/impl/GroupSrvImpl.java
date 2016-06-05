@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaotuitui.capricornus.application.GroupSrv;
 import com.xiaotuitui.capricornus.domain.model.Group;
@@ -22,6 +24,15 @@ public class GroupSrvImpl implements GroupSrv{
 
 	public List<Group> queryGroupByPage(String groupName, PageObject pageObject) {
 		return groupRep.queryGroupByPage(groupName, pageObject);
+	}
+
+	public Group queryGroupByName(String name) {
+		return groupRep.queryGroupByName(name);
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public Group createGroup(Group group) {
+		return groupRep.createGroup(group);
 	}
 
 }

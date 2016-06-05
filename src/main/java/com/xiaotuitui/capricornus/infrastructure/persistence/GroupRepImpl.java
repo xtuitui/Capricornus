@@ -47,4 +47,13 @@ public class GroupRepImpl extends JPABaseRepImpl<Group> implements GroupRep{
 		return new SqlParameters(sqlStringBuilder, parameters);
 	}
 
+	public Group queryGroupByName(String name) {
+		SqlParameters sqlParameters = new SqlParameters("Group.queryGroupByName", new String[]{"name"}, new Object[]{name});
+		return super.namedQueryFirstResult(sqlParameters);
+	}
+
+	public Group createGroup(Group group) {
+		return super.create(group);
+	}
+
 }

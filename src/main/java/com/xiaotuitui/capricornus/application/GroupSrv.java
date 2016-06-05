@@ -10,5 +10,9 @@ public interface GroupSrv {
 	public List<Group> queryAllGroup();
 	
 	public List<Group> queryGroupByPage(String groupName, PageObject pageObject);
+
+	public Group queryGroupByName(String name);
+
+	public Group createGroup(Group group);
 	
 }
