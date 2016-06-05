@@ -32,7 +32,7 @@
 	  </span>
 	  <ul class="menu_items">
 	    <li><a href="javascript:showDynamicContent('${path}/user/management/toUser');"><i class="icon am-icon-user am-icon-md"></i> User Management</a></li>
-	    <li><a href="#"><i class="icon am-icon-group am-icon-md"></i> Group Management</a></li>
+	    <li><a href="javascript:showDynamicContent('${path}/user/management/toGroup');"><i class="icon am-icon-group am-icon-md"></i> Group Management</a></li>
 	  </ul>
 	  <div class="content">
 	    <div id="dynamicContent" class="content_inner"></div>
