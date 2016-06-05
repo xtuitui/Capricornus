@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
+import com.xiaotuitui.capricornus.util.dto.UserDto;
+import com.xiaotuitui.framework.util.page.PageObject;
 import com.xiaotuitui.testframework.EntityUtil;
 
 @ContextConfiguration(locations={"file:src/main/resources/spring/applicationContext.xml"})
@@ -61,6 +63,16 @@ public class UserRepImplTest{
 	public void testDeleteUser(){
 		User user = userRep.queryUserByUsername("username10");
 		userRep.deleteUser(user);
+	}
+	
+	@Test
+	public void testQuery(){
+		PageObject pageObject = new PageObject();
+		pageObject.setCurrentPage(1l);
+		UserDto userDto = new UserDto();
+		List<User> userList = userRep.queryUserByPage(userDto, pageObject);
+		System.out.println(userList.size());
+		System.out.println(pageObject.getTotalRecord());
 	}
 
 }

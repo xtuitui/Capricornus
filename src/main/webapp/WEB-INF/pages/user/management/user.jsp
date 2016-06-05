@@ -80,46 +80,53 @@
 			$("#saveUserButton").button("reset");
 			$("#cancelUserButton").addClass("am-modal-btn").show();
 		}else{
-			alert("有待添加");
-			$("#saveUserButton").button("reset");
-			$("#cancelUserButton").addClass("am-modal-btn").show();
-			$("#addUserModal").modal("close");
+			$.post("${path}/user/management/addUser", result, function(data){
+				if(data.result=="success"){
+					//need to go user profile page
+					$("#saveUserButton").button("reset");
+					$("#cancelUserButton").addClass("am-modal-btn").show();
+					$("#addUserModal").modal("close");
+				}else{
+					var messageCode = data.data;
+					if(messageCode=="uae"){
+						showTooltip("vldTooltip", "addUsername", "用户名已经存在", -10, -$("#vldTooltip").parent().offset().left);
+						$("#addUsername").focus();
+						$("#saveUserButton").button("reset");
+						$("#cancelUserButton").addClass("am-modal-btn").show();
+					}
+				}
+			});
 		}
 	}
 	
 	function checkParamBeforeSubmit(){
-		var username = $("#addUsername").val();
+		var username = $.trim($("#addUsername").val());
 		var nickname = $("#addNickname").val();
 		var password = $("#addPassword").val();
 		var passwordConfirm = $("#addPasswordConfirm").val();
-		var email = $("#addEmail").val();
-		var invite = "";
-		var topOffset = $("#vldTooltip").parent().offset().left;
+		var email = $.trim($("#addEmail").val());
+		var leftOffset = $("#vldTooltip").parent().offset().left;
 		if($.trim(username)==""){
-			showTooltip("vldTooltip", "addUsername", "用户名不能为空", -topOffset, -10);
+			showTooltip("vldTooltip", "addUsername", "用户名不能为空", -10, -leftOffset);
 			$("#addUsername").focus();
 			return false;
 		}
 		if($.trim(password)==""){
-			showTooltip("vldTooltip", "addPassword", "密文不能为空", -topOffset, -10);
+			showTooltip("vldTooltip", "addPassword", "密文不能为空", -10, -leftOffset);
 			$("#addPassword").focus();
 			return false;
 		}
 		if(passwordConfirm!=password){
-			showTooltip("vldTooltip", "addPasswordConfirm", "密文不一致", -topOffset, -10);
+			showTooltip("vldTooltip", "addPasswordConfirm", "密文不一致", -10, -leftOffset);
 			$("#addPasswordConfirm").focus();
 			return false;
 		}
 		if($.trim(email)==""){
-			showTooltip("vldTooltip", "addEmail", "邮箱不能为空", -topOffset, -10);
+			showTooltip("vldTooltip", "addEmail", "邮箱不能为空", -10, -leftOffset);
 			$("#addEmail").focus();
 			return false;
 		}
-		if($("#invite").prop("checked")){
-			invite = "y";
-		}else{
-			invite = "n";
-		}
+		var invite = $("#invite").prop("checked");
 		return {"username":username, "nickname":nickname, "password":password, "email":email, "invite":invite};
 	}
 	

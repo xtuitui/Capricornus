@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.domain.repository.JPABaseRep;
 import com.xiaotuitui.framework.util.beanutil.ReflectUtil;
@@ -181,35 +183,30 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	}
 	
 	private StringBuilder buildCountSql(StringBuilder sql) {
-		int beginIndex_from = sql.toString().indexOf("from");
-		String sql_from_ex = sql.substring(0, beginIndex_from);
-		sql_from_ex = sql_from_ex.replaceAll("select", "");
-		sql_from_ex = sql_from_ex.replaceAll("distinct", "");
-		sql_from_ex = sql_from_ex.trim();
-		if("".equals(sql_from_ex)){
-			sql_from_ex = "*";
+		int beginIndexFrom = sql.indexOf("from");
+		String sqlFromEx = sql.substring(0, beginIndexFrom).replaceAll("select", "").trim();
+		if(StringUtils.isBlank(sqlFromEx)){
+			sqlFromEx = "*";
 		}
-		String sql_where_rear = "";
-		int beginIndex_where = sql.toString().indexOf("where");
-		if (beginIndex_where != -1) {
-			sql_where_rear = sql.substring(beginIndex_where).trim();
-			sql_where_rear = sql_where_rear.replaceAll("1=1 and", "");
-			sql_where_rear = sql_where_rear.replaceAll("1=1", "");
-			int beginIndex_orderby = sql_where_rear.toString().indexOf("order by");
-			if (beginIndex_orderby != -1){
-				sql_where_rear = sql_where_rear.substring(0, beginIndex_orderby);
+		String sqlWhereRear = "";
+		int beginIndexWhere = sql.indexOf("where");
+		if (beginIndexWhere != -1) {
+			sqlWhereRear = sql.substring(beginIndexWhere).replaceAll("1=1 and", "").replaceAll("1=1", "").trim();
+			int beginIndexOrderBy = sqlWhereRear.indexOf("order by");
+			if (beginIndexOrderBy != -1){
+				sqlWhereRear = sqlWhereRear.substring(0, beginIndexOrderBy).trim();
 			}
-			if (sql_where_rear.trim().length() == "where".length()){
-				sql_where_rear = "";
+			if (sqlWhereRear.length() == "where".length()){
+				sqlWhereRear = "";
 			}
 		}
-		String sql_from_where = "";
-		if (beginIndex_where != -1){
-			sql_from_where = sql.substring(beginIndex_from, beginIndex_where);
+		String sqlFromWhere = "";
+		if (beginIndexWhere != -1){
+			sqlFromWhere = sql.substring(beginIndexFrom, beginIndexWhere);
 		}else{
-			sql_from_where = sql.substring(beginIndex_from);
+			sqlFromWhere = sql.substring(beginIndexFrom);
 		}
-		return new StringBuilder("select count(" + sql_from_ex + ") " + sql_from_where + sql_where_rear);
+		return new StringBuilder("select count(" + sqlFromEx + ") " + sqlFromWhere + sqlWhereRear);
 	}
 
 }

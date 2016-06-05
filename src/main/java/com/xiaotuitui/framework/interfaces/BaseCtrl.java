@@ -38,9 +38,16 @@ public class BaseCtrl {
     	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
     }
     
-    protected void ajaxData(HttpServletRequest request, HttpServletResponse response, Object object){
+    protected void ajaxSuccessData(HttpServletRequest request, HttpServletResponse response, Object object){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, SUCCESS);
+    	jsonObject.put(DATA, object);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    }
+    
+    protected void ajaxErrorData(HttpServletRequest request, HttpServletResponse response, Object object){
+    	JSONObject jsonObject = new JSONObject();
+    	jsonObject.put(RESULT, ERROR);
     	jsonObject.put(DATA, object);
     	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
     }

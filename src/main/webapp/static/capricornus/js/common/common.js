@@ -7,8 +7,8 @@ function closeModal(obj, event) {
 
 function showTooltip(tooltipId, referenceTargetId, message, topOffset, leftOffset) {
 	$("#"+tooltipId).html(message).show().css({
-		left : $("#"+referenceTargetId).offset().left + topOffset,
-		top : $("#"+referenceTargetId).offset().top + leftOffset
+		top : $("#"+referenceTargetId).offset().top + topOffset,
+		left : $("#"+referenceTargetId).offset().left + leftOffset
 	});
 	setTimeout(function() {$("#"+tooltipId).fadeOut(1000);}, 1000);
 }
