@@ -16,8 +16,8 @@ apply plugin : "build-dashboard"
 group = "com.xiaotuitui"
 version = "0.0.1-SNAPSHOT"
 description = "This Is Capricornus Project"
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
+sourceCompatibility = "${capricornus_jdkLevel}"
+targetCompatibility = "${capricornus_jdkLevel}"
 
 ext{
 	spring = ["version" : "4.2.5.RELEASE"]
