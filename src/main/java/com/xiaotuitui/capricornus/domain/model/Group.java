@@ -22,7 +22,7 @@ public class Group {
 	@Column(name = "id")
 	private Integer id;
 	
-	@Column(name = "name", nullable = false, unique = true, updatable = false)
+	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	
 	@Column(name = "description")

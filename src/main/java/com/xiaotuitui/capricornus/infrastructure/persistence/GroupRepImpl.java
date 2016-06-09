@@ -56,4 +56,16 @@ public class GroupRepImpl extends JPABaseRepImpl<Group> implements GroupRep{
 		return super.create(group);
 	}
 
+	public Group loadGroupById(Integer groupId) {
+		return super.getReference(groupId);
+	}
+
+	public void removeGroup(Group group) {
+		super.remove(group);
+	}
+
+	public Group queryGroupById(Integer id) {
+		return super.find(id);
+	}
+
 }

@@ -14,17 +14,17 @@
 			<c:forEach var="group" items="${groupList}">
 				<tr>
 					<td>${group.id}</td>
-					<td><span class="group-name">${group.name}</span><br/><span class="group-description">${group.description}</span></td>
+					<td><span id="groupNameSpan${group.id}" class="group-name">${group.name}</span><br/><span id="groupDescriptionSpan${group.id}" class="group-description">${group.description}</span></td>
 					<td class="am-text-middle">
 						<div class="am-btn-toolbar">
 							<div class="am-btn-group am-btn-group-xs">
-								<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
+								<button class="am-btn am-btn-default am-btn-xs am-text-secondary" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showEditGroupModal(${group.id}, this);">
 									<span class="am-icon-pencil-square-o"></span> Edit
 								</button>
 								<button class="am-btn am-btn-default am-btn-xs am-text-success">
 									<span class="am-icon-group"></span> User
 								</button>
-								<button class="am-btn am-btn-default am-btn-xs am-text-danger">
+								<button class="am-btn am-btn-default am-btn-xs am-text-danger" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showDeleteGroupModal(${group.id}, this);">
 									<span class="am-icon-trash-o"></span> Delete
 								</button>
 							</div>

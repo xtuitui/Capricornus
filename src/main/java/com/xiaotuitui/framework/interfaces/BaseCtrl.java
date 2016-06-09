@@ -52,7 +52,7 @@ public class BaseCtrl {
     	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
     }
     
-    protected void ajaxDataArray(HttpServletRequest request, HttpServletResponse response, Object... objectArray){
+    protected void ajaxSuccessDataArray(HttpServletRequest request, HttpServletResponse response, Object... objectArray){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, SUCCESS);
     	JSONArray jsonArray = new JSONArray();

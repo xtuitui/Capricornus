@@ -47,5 +47,22 @@ public class GroupManagementCtrl extends BaseCtrl{
 			ajaxSuccess(request, response);
 		}
 	}
+	
+	@RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
+	public void removeGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "groupId") Integer groupId){
+		groupSrv.removeGroup(groupId);
+		ajaxSuccess(request, response);
+	}
+	
+	@RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
+	public void updateGroup(HttpServletRequest request, HttpServletResponse response, Group group){
+		Group checkGroup = groupSrv.queryGroupByName(group.getName());
+		if(checkGroup != null && ! checkGroup.getId().equals(group.getId())){
+			ajaxErrorData(request, response, MessageCode.GROUP_ALREADY_EXIST);
+		}else{
+			groupSrv.updateGroup(group);
+			ajaxSuccess(request, response);
+		}
+	}
 
 }

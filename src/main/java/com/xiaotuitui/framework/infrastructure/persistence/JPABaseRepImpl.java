@@ -35,7 +35,7 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	}
 	
 	public void remove(T t) {
-		getEntityManager().remove(update(t));
+		getEntityManager().remove(t);
 	}
 
 	public void remove(Serializable id) {

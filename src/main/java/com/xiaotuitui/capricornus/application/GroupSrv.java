@@ -14,5 +14,9 @@ public interface GroupSrv {
 	public Group queryGroupByName(String name);
 
 	public Group createGroup(Group group);
+
+	public void removeGroup(Integer groupId);
+
+	public void updateGroup(Group group);
 	
 }

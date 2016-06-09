@@ -15,4 +15,10 @@ public interface GroupRep {
 
 	public Group createGroup(Group group);
 
+	public Group loadGroupById(Integer groupId);
+
+	public void removeGroup(Group group);
+
+	public Group queryGroupById(Integer id);
+
 }
