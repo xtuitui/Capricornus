@@ -65,7 +65,7 @@
 	
 	function checkParamBeforeSave(){
 		var groupName = $.trim($("#addGroupName").val());
-		var description = $.trim($("#addDescription").val());
+		var description = $("#addDescription").val();
 		var topOffset = $("#vldTooltip").parent().offset().top;
 		var leftOffset = $("#vldTooltip").parent().offset().left;
 		if($.trim(groupName)==""){
@@ -147,7 +147,7 @@
 	
 	function checkParamBeforeUpdate(){
 		var groupId = $("#editGroupId").val();
-		var groupName = $("#editGroupName").val();
+		var groupName = $.trim($("#editGroupName").val());
 		var groupDescription = $("#editGroupDescription").val();
 		var topOffset = $("#editVldTooltip").parent().offset().top;
 		var leftOffset = $("#editVldTooltip").parent().offset().left;
