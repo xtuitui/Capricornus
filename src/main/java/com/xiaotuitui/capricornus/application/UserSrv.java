@@ -20,4 +20,6 @@ public interface UserSrv {
 	
 	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject);
 
+	public void updateUserGroup(Integer id, List<Integer> groupIdList);
+
 }

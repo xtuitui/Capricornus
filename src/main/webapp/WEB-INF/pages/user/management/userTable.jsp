@@ -18,12 +18,12 @@
 			<c:forEach var="user" items="${userList}">
 				<tr>
 					<td>${user.id}</td>
-					<td><a href="#">${user.username}</a></td>
-					<td>${user.nickname}</td>
+					<td><a href="#" id="usernameA${user.id}">${user.username}</a></td>
+					<td id="nicknameTd${user.id}">${user.nickname}</td>
 					<td>${user.email}</td>
 					<td>
 						<c:forEach var="group" items="${user.groups}">
-							<a href="#">${group.name}</a><br/>
+							<a href="#">${group.name}</a><input type="hidden" name="userGroupIdInput${user.id}" value="${group.id}" /><br/>
 						</c:forEach>
 					</td>
 					<td class="am-text-middle">
@@ -32,7 +32,7 @@
 								<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
 									<span class="am-icon-pencil-square-o"></span> Edit
 								</button>
-								<button class="am-btn am-btn-default am-btn-xs am-text-success">
+								<button class="am-btn am-btn-default am-btn-xs am-text-success"  data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showUserGroupModal(${user.id}, this);">
 									<span class="am-icon-group"></span> Group
 								</button>
 								<button class="am-btn am-btn-default am-btn-xs am-text-warning">

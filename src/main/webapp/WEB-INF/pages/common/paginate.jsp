@@ -20,6 +20,7 @@
 						<a class='paginate_button' onclick="paginate(${currentIndex});">${currentIndex}</a>
 					</c:when>
 					<c:otherwise>
+						<input id="currentPage" type="hidden" value="${pageObject.currentPage}"/>
 						<a class='paginate_button current'>${currentIndex}</a>
 					</c:otherwise>
 				</c:choose>

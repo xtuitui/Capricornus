@@ -12,7 +12,7 @@
 			$(this).removeClass("am-btn-secondary");
 		});
 		
-		$(".select2").select2({
+		$("#group.select2").select2({
 			width: "120%" ,
 			placeholder: "Default Option" ,
 			maximumInputLength: 20 ,
@@ -37,6 +37,12 @@
 			//select2()
 			//select2("destroy")
 			//val(null).trigger("change");
+		});
+		
+		$("#userGroup.select2").select2({
+			width: "100%" ,
+			placeholder: "None Group" ,
+			maximumInputLength: 20 ,
 		});
 	});
 	
@@ -73,15 +79,15 @@
 	}
 	
 	function saveUser(){
-		modalButtonLoading();
+		modalButtonLoading("saveUserButton", "cancelUserButton");
 		var result = checkParamBeforeSubmit();
 		if(result===false){
-			modalButtonReset();
+			modalButtonReset("saveUserButton", "cancelUserButton");
 		}else{
 			$.post("${path}/user/management/addUser", result, function(data){
 				if(data.result=="success"){
 					//need to go user profile page
-					modalButtonReset();
+					modalButtonReset("saveUserButton", "cancelUserButton");
 					$("#addUserModal").modal("close");
 				}else{
 					var messageCode = data.data;
@@ -90,21 +96,21 @@
 						var leftOffset = $("#vldTooltip").parent().offset().left;
 						showTooltip("vldTooltip", "addUsername", "用户名已经存在", 30 - topOffset, -leftOffset);
 						$("#addUsername").focus();
-						modalButtonReset();
+						modalButtonReset("saveUserButton", "cancelUserButton");
 					}
 				}
 			});
 		}
 	}
 	
-	function modalButtonLoading(){
-		$("#cancelUserButton").hide().removeClass("am-modal-btn");
-		$("#saveUserButton").button("loading");
+	function modalButtonLoading(sureButtonId, cancelButtonId){
+		$("#"+cancelButtonId).hide().removeClass("am-modal-btn");
+		$("#"+sureButtonId).button("loading");
 	}
 	
-	function modalButtonReset(){
-		$("#saveUserButton").button("reset");
-		$("#cancelUserButton").addClass("am-modal-btn").show();
+	function modalButtonReset(sureButtonId, cancelButtonId){
+		$("#"+sureButtonId).button("reset");
+		$("#"+cancelButtonId).addClass("am-modal-btn").show();
 	}
 	
 	function checkParamBeforeSubmit(){
@@ -137,6 +143,41 @@
 		}
 		var invite = $("#invite").prop("checked");
 		return {"username":username, "nickname":nickname, "password":password, "email":email, "invite":invite};
+	}
+	
+	function showUserGroupModal(userId, obj){
+		$(obj).button("loading");
+		$("#userGroupUserId").val(userId);
+		$("#userGroupUsername").val($("#usernameA"+userId).html());
+		$("#userGroupNickname").val($("#nicknameTd"+userId).html());
+		var originalGroup = [];
+		$("input[name=userGroupIdInput"+userId+"]").each(function(){
+			originalGroup.push($(this).val());
+		});
+		$("#userGroup").val(originalGroup).change();
+		$("#userGroupModal").modal({
+			"onConfirm": function(){
+				updateUserGroup();
+			}, 
+			"closeOnConfirm": false
+		});
+		$(obj).button("reset");
+	}
+	
+	function updateUserGroup(){
+		modalButtonLoading("saveUserButton", "cancelUserButton");
+		var userId = $("#userGroupUserId").val();
+		var groupIdStringList = "";
+		$("#userGroup option:selected").each(function(){
+			groupIdStringList += $(this).val() + ",";
+		});
+		$.post("${path}/user/management/updateUserGroup", {"id":userId, "groupIdStringList":groupIdStringList}, function(data){
+			if(data.result=="success"){
+				searchUser($("#currentPage").val());
+				$("#userGroupModal").modal("close");
+			}
+			modalButtonReset("saveUserButton", "cancelUserButton");
+		});
 	}
 	
 	function paginate(currentPage){
@@ -197,6 +238,7 @@
 		<div id="userTable" class="am-g"></div>
 	</div>
 </div>
+
 <div id="addUserModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
 	<div class="am-modal-dialog">
 		<div class="am-modal-hd">
@@ -262,4 +304,53 @@
 		<div id="vldTooltip" class="vld-tooltip"></div>
 	</div>
 </div>
+
+<div id="userGroupModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">
+			用户与用户组
+			<a href="javascript:;" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		</div>
+		<hr/>
+		<div class="modal-description">
+			<div>&nbsp;&nbsp;欢迎使用Capricornus!<br/>&nbsp;&nbsp;您现在可以编辑用户与用户组的关系. <br/>&nbsp;&nbsp;谢谢支持...</div>
+		</div>
+		<hr/>
+		<div class="am-modal-bd">
+			<div class="am-u-sm-12 am-u-end" style="position: relative;left: 0px;">
+				<form class="am-form am-form-horizontal form-radius">
+					<div class="am-form-group">
+						<label class="am-u-sm-4 am-form-label">用户 / Username</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="userGroupUserId" type="hidden"/>
+							<input id="userGroupUsername" type="text" readonly="readonly" />
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label class="am-u-sm-4 am-form-label">昵称 / Nickname</label>
+						<div class="am-u-sm-8 am-u-end">
+							<input id="userGroupNickname" type="text" readonly="readonly" />
+						</div>
+					</div>
+					<div class="am-form-group">
+						<label for="userGroup" class="am-u-sm-4 am-form-label">用户组 / Group</label>
+						<div class="am-u-sm-8 am-u-end">
+							<select id="userGroup" class="am-radius select2" multiple="multiple">
+								<c:forEach var="group" items="${groupList}">
+									<option value="${group.id}">${group.name}</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<hr class="footer-hr"/>
+		<div class="am-modal-footer">
+			<span id="cancelUserGroupButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
+			<span id="saveUserGroupButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
+		</div>
+	</div>
+</div>
+
 <%@include file="/WEB-INF/pages/common/footer.jsp"%>

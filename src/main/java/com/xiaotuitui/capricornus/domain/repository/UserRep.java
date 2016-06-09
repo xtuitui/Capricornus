@@ -20,4 +20,6 @@ public interface UserRep {
 
 	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject);
 
+	public User loadUser(Integer id);
+
 }

@@ -1,11 +1,13 @@
 package com.xiaotuitui.capricornus.interfaces.user.management;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +76,21 @@ public class UserManagementCtrl extends BaseCtrl{
 		
 		System.out.println("need to reset user pwd...");
 		user.setPassword(user.getPassword());
+	}
+	
+	@RequestMapping(value = "/updateUserGroup", method = RequestMethod.POST)
+	public void updateUserGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
+		List<Integer> groupIdList = convertStringArrayToList(StringUtils.split(groupIdStringList, ","));
+		userSrv.updateUserGroup(id, groupIdList);
+		ajaxSuccess(request, response);
+	}
+
+	private List<Integer> convertStringArrayToList(String[] groupIdArray) {
+		List<Integer> groupIdList = new ArrayList<Integer>();
+		for(String groupIdString:groupIdArray){
+			groupIdList.add(Integer.valueOf(groupIdString));
+		}
+		return groupIdList;
 	}
 
 }

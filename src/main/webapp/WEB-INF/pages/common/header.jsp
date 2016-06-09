@@ -1,7 +1,7 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="user-scalable=no, maximum-scale=10.0, minimum-scale=0.25, width=device-width, height=device-height, initial-scale=0.6" />
 <meta name="format-detection" content="telephone=no">
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />

@@ -85,4 +85,8 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 		return new SqlParameters(sqlStringBuilder, parameters);
 	}
 
+	public User loadUser(Integer id) {
+		return super.getReference(id);
+	}
+
 }

@@ -56,7 +56,7 @@ public class GroupRepImpl extends JPABaseRepImpl<Group> implements GroupRep{
 		return super.create(group);
 	}
 
-	public Group loadGroupById(Integer groupId) {
+	public Group loadGroup(Integer groupId) {
 		return super.getReference(groupId);
 	}
 
@@ -64,7 +64,7 @@ public class GroupRepImpl extends JPABaseRepImpl<Group> implements GroupRep{
 		super.remove(group);
 	}
 
-	public Group queryGroupById(Integer id) {
+	public Group findGroup(Integer id) {
 		return super.find(id);
 	}
 

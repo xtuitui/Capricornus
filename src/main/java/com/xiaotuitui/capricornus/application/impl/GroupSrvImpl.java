@@ -37,13 +37,13 @@ public class GroupSrvImpl implements GroupSrv{
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void removeGroup(Integer groupId) {
-		Group group = groupRep.loadGroupById(groupId);
+		Group group = groupRep.loadGroup(groupId);
 		groupRep.removeGroup(group);
 	}
 
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
 	public void updateGroup(Group group) {
-		Group originalGroup = groupRep.loadGroupById(group.getId());
+		Group originalGroup = groupRep.loadGroup(group.getId());
 		originalGroup.setName(group.getName());
 		originalGroup.setDescription(group.getDescription());
 	}

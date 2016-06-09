@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.xiaotuitui.capricornus.application.UserSrv;
 import com.xiaotuitui.capricornus.domain.model.User;
+import com.xiaotuitui.capricornus.domain.repository.GroupRep;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
 import com.xiaotuitui.framework.util.page.PageObject;
@@ -18,6 +19,9 @@ public class UserSrvImpl implements UserSrv{
 	
 	@Autowired
 	private UserRep userRep;
+	
+	@Autowired
+	private GroupRep groupRep;
 
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<User> queryAllUser() {
@@ -49,6 +53,15 @@ public class UserSrvImpl implements UserSrv{
 
 	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject) {
 		return userRep.queryUserByPage(userDto, pageObject);
+	}
+
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public void updateUserGroup(Integer id, List<Integer> groupIdList) {
+		User user = userRep.loadUser(id);
+		user.getGroups().clear();
+		for(Integer groupId:groupIdList){
+			user.getGroups().add(groupRep.loadGroup(groupId));
+		}
 	}
 
 }
