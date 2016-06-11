@@ -29,5 +29,5 @@ public class GroupRepImplTest {
 		List<Group> groupList = groupRep.queryAllGroup();
 		System.out.println(groupList);
 	}
-
+	
 }

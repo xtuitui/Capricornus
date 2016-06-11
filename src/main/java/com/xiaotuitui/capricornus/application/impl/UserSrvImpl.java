@@ -51,6 +51,7 @@ public class UserSrvImpl implements UserSrv{
 		return userRep.createUser(user);
 	}
 
+	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<User> queryUserByPage(UserDto userDto, PageObject pageObject) {
 		return userRep.queryUserByPage(userDto, pageObject);
 	}

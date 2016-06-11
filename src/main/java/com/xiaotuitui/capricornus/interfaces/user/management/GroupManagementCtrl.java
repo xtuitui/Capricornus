@@ -1,10 +1,12 @@
 package com.xiaotuitui.capricornus.interfaces.user.management;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.xiaotuitui.capricornus.application.GroupSrv;
 import com.xiaotuitui.capricornus.domain.model.Group;
+import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.util.constant.MessageCode;
 import com.xiaotuitui.framework.interfaces.BaseCtrl;
 import com.xiaotuitui.framework.util.page.PageObject;
@@ -63,6 +66,27 @@ public class GroupManagementCtrl extends BaseCtrl{
 			groupSrv.updateGroup(group);
 			ajaxSuccess(request, response);
 		}
+	}
+	
+	@RequestMapping(value = "/queryUserByGroup", method = RequestMethod.POST)
+	public void searchUserByGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id){
+		List<User> userList = groupSrv.queryUserByGroup(id);
+		ajaxSuccessData(request, response, userList);
+	}
+	
+	@RequestMapping(value = "/updateGroupUser", method = RequestMethod.POST)
+	public void updateGroupUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "userIdStringList") String userIdStringList){
+		List<Integer> userIdList = convertStringArrayToList(StringUtils.split(userIdStringList, ","));
+		groupSrv.updateGroupUser(id, userIdList);
+		ajaxSuccess(request, response);
+	}
+
+	private List<Integer> convertStringArrayToList(String[] userIdArray) {
+		List<Integer> userIdList = new ArrayList<Integer>();
+		for(String userIdString:userIdArray){
+			userIdList.add(Integer.valueOf(userIdString));
+		}
+		return userIdList;
 	}
 
 }

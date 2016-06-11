@@ -92,5 +92,17 @@ public class UserManagementCtrl extends BaseCtrl{
 		}
 		return groupIdList;
 	}
+	
+	/**
+	 * Copy From queryUserByPage
+	 * Use For searchUserModal
+	 */
+	@RequestMapping(value = "/searchUserModal", method = RequestMethod.POST)
+	public String searchUserModal(HttpServletRequest request, UserDto userDto, PageObject pageObject){
+		List<User> userList = userSrv.queryUserByPage(userDto, pageObject);
+		request.setAttribute("userList", userList);
+		request.setAttribute("pageObject", pageObject);
+		return "/user/management/searchUserModal";
+	}
 
 }

@@ -21,7 +21,7 @@
 								<button class="am-btn am-btn-default am-btn-xs am-text-secondary" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showEditGroupModal(${group.id}, this);">
 									<span class="am-icon-pencil-square-o"></span> Edit
 								</button>
-								<button class="am-btn am-btn-default am-btn-xs am-text-success">
+								<button class="am-btn am-btn-default am-btn-xs am-text-success" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showGroupUserModal(${group.id}, this);">
 									<span class="am-icon-group"></span> User
 								</button>
 								<button class="am-btn am-btn-default am-btn-xs am-text-danger" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showDeleteGroupModal(${group.id}, this);">

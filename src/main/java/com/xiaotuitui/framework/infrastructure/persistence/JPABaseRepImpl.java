@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.domain.repository.JPABaseRep;
+import com.xiaotuitui.framework.exception.SysException;
 import com.xiaotuitui.framework.util.beanutil.ReflectUtil;
 import com.xiaotuitui.framework.util.page.PageObject;
 
@@ -148,11 +149,24 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 
 	@SuppressWarnings("unchecked")
 	private List<T> executeQueryPageResult(Query query, PageObject pageObject){
+		checkPageObject(pageObject);
 		int currentPage = pageObject.getCurrentPage().intValue();
 		int pageSize = PageObject.getPageSize();
 		return query.setFirstResult((currentPage - 1) * pageSize).setMaxResults(pageSize).getResultList();
 	}
 	
+	private void checkPageObject(PageObject pageObject) {
+		if(PageObject.getPageSize()==null){
+			throw new SysException("Please provide page size !");
+		}
+		if(PageObject.getPageBarSize()==null){
+			throw new SysException("Please provide page bar size !");
+		}
+		if(pageObject.getCurrentPage()==null){
+			throw new SysException("Please provide current page !");
+		}
+	}
+
 	public long count(SqlParameters sqlParameters) {
 		SqlParameters countSqlParameters = new SqlParameters();
 		StringBuilder countSqlStringBuilder = buildCountSql(sqlParameters.getSqlStringBuilder());

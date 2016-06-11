@@ -11,6 +11,15 @@
 		}, function(){
 			$(this).removeClass("am-btn-secondary");
 		});
+		
+		$("#groupUserModal").on("closed.modal.amui", function(){
+			pageButton = "group";
+			$("#searchUserModal").html("");
+		});
+		
+		$("#groupUserModal").on("opened.modal.amui", function(){
+			pageButton = "userModal";
+		});
 	});
 	
 	function showAddGroupModal(){
@@ -159,6 +168,51 @@
 		return {"id":groupId, "name":groupName, "description":groupDescription};
 	}
 	
+	function showGroupUserModal(groupId, obj){
+		searchUserModal(1);
+		searchUserByGroup(groupId);
+		$(obj).button("loading");
+		$("#groupUserGroupId").val(groupId);
+		$("#groupUserGroupName").html($("#groupNameSpan"+groupId).html());
+		$("#groupUserModal").modal({
+			"width": "1300",
+			"onConfirm": function(){
+				updateGroupUser();
+			}, 
+			"closeOnConfirm": false
+		});
+		$(obj).button("reset");
+	}
+	
+	function updateGroupUser(){
+		modalButtonLoading("groupUserButton", "cancelGroupUserButton");
+		var groupId = $("#groupUserGroupId").val();
+		var userIdStringList = "";
+		$("#groupUserSelect option").each(function(){
+			userIdStringList += $(this).val() + ",";
+		});
+		$.post("${path}/user/management/updateGroupUser", {"id":groupId, "userIdStringList":userIdStringList}, function(data){
+			if(data.result=="success"){
+				$("#groupUserModal").modal("close");
+			}else{
+				alert("出错");
+			}
+			modalButtonReset("groupUserButton", "cancelGroupUserButton");
+		});
+	}
+	
+	function searchUserByGroup(groupId){
+		$.post("${path}/user/management/queryUserByGroup", {"id":groupId}, function(data){
+			var optionHtml = "";
+			var userList = data.data;
+			for(var i=0;i<userList.length;i++){
+				var user = userList[i];
+				optionHtml += "<option value='"+user.id+"' ondblclick='$(this).remove();'>"+user.nickname+" - ("+user.username+")</option>";
+			}
+			$("#groupUserSelect").html(optionHtml);
+		});
+	}
+	
 	function searchGroup(currentPage){
 		$("#search").button("loading");
 		$("#loading").fadeIn(500);
@@ -171,8 +225,66 @@
 		});
 	}
 	
+	function searchUserModal(currentPage){
+		$("#searchUser").button("loading");
+		var username = $("#groupUserUsername").val();
+		var nickname = $("#groupUserNickname").val();
+		var param  = {"username":username, "nickname":nickname, "currentPage":currentPage};
+		$.post("${path}/user/management/searchUserModal", param, function(data){
+			$("#searchUserModal").html(data);
+			$("#searchUser").button("reset");
+		});
+	}
+	
+	function addToUserList(obj){
+		$(obj).button("loading");
+		var select = $("#groupUserSelect");
+		var originalOption = [];
+		select.children("option").each(function(){
+			originalOption.push($(this).val());
+		});
+		var optionHtml = "";
+		$("input[type='checkbox'][name='userCheckBox']:checked").each(function(){
+			var tr = $(this).parent().parent().parent();
+			var id = tr.find("input[type='hidden'][name='id']").val();
+			if($.inArray(id, originalOption)!=-1){
+				return true;
+			}
+			var username = tr.find("input[type='hidden'][name='username']").val();
+			var nickname = tr.find("input[type='hidden'][name='nickname']").val();
+			optionHtml += "<option value='"+id+"' ondblclick='$(this).remove();'>"+nickname+" - ("+username+")</option>";
+		});
+		select.append(optionHtml);
+		$(obj).button("reset");
+	}
+	
+	function addAllToUserList(obj){
+		$("#all").uCheck("check");
+		selectAll();
+		addToUserList(obj);
+	}
+	
+	function removeFromUserList(obj){
+		$(obj).button("loading");
+		$("#groupUserSelect option:selected").each(function(){
+			$(this).remove();
+		});
+		$(obj).button("reset");
+	}
+	
+	function removeAllFromUserList(obj){
+		$(obj).button("loading");
+		$("#groupUserSelect").html("");
+		$(obj).button("reset");
+	}
+	
+	var pageButton = "group";
 	function paginate(currentPage){
-		searchGroup(currentPage);
+		if(pageButton=="group"){
+			searchGroup(currentPage);
+		}else if(pageButton=="userModal"){
+			searchUserModal(currentPage);
+		}
 	}
 </script>
 <div class="admin-content">
@@ -310,4 +422,78 @@
 		</div>
 	</div>
 </div>
+
+<div id="groupUserModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">
+			用户组成员
+			<a href="javascript:;" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		</div>
+		<hr/>
+		<div class="modal-description">
+			<div>&nbsp;&nbsp;欢迎使用Capricornus!<br/>&nbsp;&nbsp;您现在可以添加用户组成员. <br/>&nbsp;&nbsp;谢谢支持...</div>
+		</div>
+		<hr/>
+		<div class="am-modal-bd">
+			<div class="am-u-sm-12 am-u-end" style="position: relative;left: 0px;">
+				<form class="am-form am-form-horizontal form-radius">
+					<div class="am-form-group">
+						<div class="am-u-sm-9 am-u-end">
+							<label for="groupUserUsername" class="am-u-sm-4 search-user-label">用户名 / Username</label>
+							<label for="groupUserNickname" class="am-u-sm-4 search-user-label">昵称 / Nickname</label>
+							<button id="searchUser" type="button" class="am-u-sm-2 am-u-end am-btn am-btn-success am-round" data-am-loading="{spinner:'spinner', loadingText:'Searching...'}" onclick="searchUserModal(1);">
+								<i class="am-icon-search"></i>
+								Search
+							</button>
+						</div>
+						<div class="am-u-sm-3 am-u-end">
+							<label id="groupUserGroupName" class="am-u-sm-12 search-user-label"></label>
+							<input id="groupUserGroupId" type="hidden"/>
+						</div>
+						<div class="am-u-sm-9 am-u-end">
+							<div class="am-u-sm-4">
+								<input id="groupUserUsername" type="text" placeholder="Username" class="am-u-sm-4"/>
+							</div>
+							<div class="am-u-sm-4 am-u-end">
+								<input id="groupUserNickname" type="text" placeholder="Nickname" class="am-u-sm-4"/>
+							</div>
+						</div>
+						<div class="am-u-sm-3 am-u-end">
+							<label class="am-u-sm-12 search-user-label">组内成员</label>
+						</div>
+					</div>
+					<div class="am-form-group">
+						<div id="searchUserModal" class="am-u-sm-8"></div>
+						<div id="operationArea" class="am-u-sm-1">
+							<button type="button" class="am-u-sm-1 am-btn-lg am-btn am-btn-danger am-round" data-am-loading="{spinner:'spinner'}" onclick="addAllToUserList(this);">
+								<i class="am-icon-angle-double-right"></i>
+							</button>
+							<br/><br/><br/>
+							<button type="button" class="am-u-sm-1 am-btn-lg am-btn am-btn-danger am-round" data-am-loading="{spinner:'spinner'}" onclick="addToUserList(this);">
+								<i class="am-icon-angle-right"></i>
+							</button>
+							<br/><br/><br/>
+							<button type="button" class="am-u-sm-1 am-btn-lg am-btn am-btn-danger am-round" data-am-loading="{spinner:'spinner'}" onclick="removeFromUserList(this);">
+								<i class="am-icon-angle-left"></i>
+							</button>
+							<br/><br/><br/>
+							<button type="button" class="am-u-sm-1 am-u-end am-btn-lg am-btn am-btn-danger am-round" data-am-loading="{spinner:'spinner'}" onclick="removeAllFromUserList(this);">
+								<i class="am-icon-angle-double-left"></i>
+							</button>
+						</div>
+						<div class="am-u-sm-3 am-u-end">
+							<select id="groupUserSelect" multiple="multiple" size="10"></select>
+						</div>
+            		</div>
+				</form>
+			</div>
+		</div>
+		<hr class="footer-hr"/>
+		<div class="am-modal-footer">
+			<span id="cancelGroupUserButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
+			<span id="groupUserButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
+		</div>
+	</div>
+</div>
+
 <%@include file="/WEB-INF/pages/common/footer.jsp"%>

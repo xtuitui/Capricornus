@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 @Entity
 @Table(name = "tcs_user")
 @NamedQueries(value = {
@@ -56,11 +58,13 @@ public class User {
 	private Date lastUpdatedTime;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "tcs_user_group", 
+	@JoinTable(
+			name = "tcs_user_group", 
 			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
 			inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
 	)
 	@OrderBy(value = "id asc")
+	@JSONField(serialize = false)
 	private List<Group> groups;
 	
 	public User() {

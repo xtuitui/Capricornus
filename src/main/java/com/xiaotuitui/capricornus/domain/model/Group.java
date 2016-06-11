@@ -1,12 +1,19 @@
 package com.xiaotuitui.capricornus.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +34,15 @@ public class Group {
 	
 	@Column(name = "description")
 	private String description;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "tcs_user_group", 
+			joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}, 
+			inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
+	)
+	@OrderBy(value = "id asc")
+	private List<User> users;
 
 	public Integer getId() {
 		return id;
@@ -50,6 +66,14 @@ public class Group {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 	public String toString() {
