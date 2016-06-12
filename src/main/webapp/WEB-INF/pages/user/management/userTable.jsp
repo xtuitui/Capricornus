@@ -32,7 +32,7 @@
 								<button class="am-btn am-btn-default am-btn-xs am-text-secondary">
 									<span class="am-icon-pencil-square-o"></span> Edit
 								</button>
-								<button class="am-btn am-btn-default am-btn-xs am-text-success"  data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showUserGroupModal(${user.id}, this);">
+								<button class="am-btn am-btn-default am-btn-xs am-text-success" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showUserGroupModal(${user.id}, this);">
 									<span class="am-icon-group"></span> Group
 								</button>
 								<button class="am-btn am-btn-default am-btn-xs am-text-warning">
@@ -41,7 +41,7 @@
 								<button class="am-btn am-btn-default am-btn-xs">
 									<span class="am-icon-ban"></span> Block
 								</button>
-								<button class="am-btn am-btn-default am-btn-xs am-text-danger">
+								<button class="am-btn am-btn-default am-btn-xs am-text-danger" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showDeleteUserModal(${user.id}, this);">
 									<span class="am-icon-trash-o"></span> Delete
 								</button>
 							</div>

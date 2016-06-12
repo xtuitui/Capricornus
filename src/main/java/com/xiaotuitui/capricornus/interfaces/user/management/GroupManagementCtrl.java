@@ -52,7 +52,7 @@ public class GroupManagementCtrl extends BaseCtrl{
 	}
 	
 	@RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
-	public void removeGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "groupId") Integer groupId){
+	public void deleteGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "groupId") Integer groupId){
 		groupSrv.removeGroup(groupId);
 		ajaxSuccess(request, response);
 	}

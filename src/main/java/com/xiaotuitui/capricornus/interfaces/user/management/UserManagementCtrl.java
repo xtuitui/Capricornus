@@ -93,6 +93,12 @@ public class UserManagementCtrl extends BaseCtrl{
 		return groupIdList;
 	}
 	
+	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
+	public void deleteUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userId") Integer userId){
+		userSrv.removeUser(userId);
+		ajaxSuccess(request, response);
+	}
+	
 	/**
 	 * Copy From queryUserByPage
 	 * Use For searchUserModal

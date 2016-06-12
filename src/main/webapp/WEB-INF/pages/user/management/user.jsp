@@ -180,6 +180,38 @@
 		});
 	}
 	
+	function showDeleteUserModal(userId, obj){
+		$(obj).button("loading");
+		var username = $("#usernameA"+userId).html();
+		var nickname = $("#nicknameTd"+userId).html();
+		$("#deleteNickname").html(nickname);
+		$("#deleteUsername").html(username);
+		$("#deleteUserId").val(userId);
+		$("#deleteUserModal").modal({
+			"onConfirm": function(){
+				deleteUser();
+			}, 
+			"closeOnConfirm": false
+		});
+		$(obj).button("reset");
+	}
+	
+	function deleteUser(){
+		modalButtonLoading("deleteUserButton", "cancelDeleteButton");
+		var userId = $("#deleteUserId").val();
+		$.post("${path}/user/management/deleteUser", {"userId":userId}, function(data){
+			if(data.result=="success"){
+				$("#deleteUserModal").modal("close");
+				$("#username").val($("#deleteUsername").html());
+				$("#nickname").val($("#deleteNickname").html());
+				searchUser(1);
+			}else{
+				alert("删除出错!");
+			}
+			modalButtonReset("deleteUserButton", "cancelDeleteButton");
+		});
+	}
+	
 	function paginate(currentPage){
 		searchUser(currentPage);
 	}
@@ -349,6 +381,33 @@
 		<div class="am-modal-footer">
 			<span id="cancelUserGroupButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
 			<span id="saveUserGroupButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
+		</div>
+	</div>
+</div>
+
+<div id="deleteUserModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">
+			删除用户
+			<a href="javascript:;" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		</div>
+		<hr/>
+		<div class="modal-description">
+			<div>&nbsp;&nbsp;欢迎使用Capricornus!<br/>&nbsp;&nbsp;您现在可以删除用户, 删除成功后自动移除所有相关依赖. <br/>&nbsp;&nbsp;谢谢支持...</div>
+		</div>
+		<hr/>
+		<div class="am-modal-bd">
+			<div class="am-u-sm-12 am-u-end" style="position: relative;left: 0px;">
+				确定要删除该用户吗 ?
+				<br/>
+				用户 : <span id="deleteNickname"></span> - (<span id="deleteUsername"></span>)
+				<input id="deleteUserId" type="hidden" />
+			</div>
+		</div>
+		<hr class="footer-hr"/>
+		<div class="am-modal-footer">
+			<span id="cancelDeleteButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
+			<span id="deleteUserButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
 		</div>
 	</div>
 </div>

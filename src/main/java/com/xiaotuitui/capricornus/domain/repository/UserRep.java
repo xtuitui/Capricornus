@@ -22,4 +22,6 @@ public interface UserRep {
 
 	public User loadUser(Integer id);
 
+	public void removeUser(User user);
+
 }

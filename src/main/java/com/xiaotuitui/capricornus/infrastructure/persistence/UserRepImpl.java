@@ -89,4 +89,8 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 		return super.getReference(id);
 	}
 
+	public void removeUser(User user) {
+		super.remove(user);
+	}
+
 }

@@ -65,4 +65,11 @@ public class UserSrvImpl implements UserSrv{
 		}
 	}
 
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+	public void removeUser(Integer userId) {
+		User user = userRep.loadUser(userId);
+		user.getGroups().clear();
+		userRep.removeUser(user);
+	}
+
 }

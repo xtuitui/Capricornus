@@ -22,4 +22,6 @@ public interface UserSrv {
 
 	public void updateUserGroup(Integer id, List<Integer> groupIdList);
 
+	public void removeUser(Integer userId);
+
 }
