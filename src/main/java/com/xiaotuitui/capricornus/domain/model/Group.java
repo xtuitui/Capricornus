@@ -43,6 +43,10 @@ public class Group {
 	)
 	@OrderBy(value = "id asc")
 	private List<User> users;
+	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "groups")
+	@OrderBy(value = "id asc")
+	private List<SystemPermission> systemPermissions;
 
 	public Integer getId() {
 		return id;
@@ -74,6 +78,14 @@ public class Group {
 
 	public void setUsers(List<User> users) {
 		this.users = users;
+	}
+
+	public List<SystemPermission> getSystemPermissions() {
+		return systemPermissions;
+	}
+
+	public void setSystemPermissions(List<SystemPermission> systemPermissions) {
+		this.systemPermissions = systemPermissions;
 	}
 
 	public String toString() {

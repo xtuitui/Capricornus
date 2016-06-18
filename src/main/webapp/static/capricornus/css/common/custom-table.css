@@ -1,0 +1,9 @@
+.custom-table-class {
+	border-radius: 15px;
+	box-shadow: 1px 1px 1px #0e90d2;
+}
+
+.custom-table-class thead tr {
+	background-color: #0e90e2;
+	color: #eee;
+}

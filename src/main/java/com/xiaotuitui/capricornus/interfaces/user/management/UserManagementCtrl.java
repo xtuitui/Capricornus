@@ -1,6 +1,5 @@
 package com.xiaotuitui.capricornus.interfaces.user.management;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +21,7 @@ import com.xiaotuitui.capricornus.util.constant.Constant;
 import com.xiaotuitui.capricornus.util.constant.MessageCode;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
 import com.xiaotuitui.framework.interfaces.BaseCtrl;
+import com.xiaotuitui.framework.util.list.ListUtil;
 import com.xiaotuitui.framework.util.page.PageObject;
 
 @Controller
@@ -80,19 +80,11 @@ public class UserManagementCtrl extends BaseCtrl{
 	
 	@RequestMapping(value = "/updateUserGroup", method = RequestMethod.POST)
 	public void updateUserGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
-		List<Integer> groupIdList = convertStringArrayToList(StringUtils.split(groupIdStringList, ","));
+		List<Integer> groupIdList = ListUtil.convertStringArrayToIntegerList(StringUtils.split(groupIdStringList, ","));
 		userSrv.updateUserGroup(id, groupIdList);
 		ajaxSuccess(request, response);
 	}
 
-	private List<Integer> convertStringArrayToList(String[] groupIdArray) {
-		List<Integer> groupIdList = new ArrayList<Integer>();
-		for(String groupIdString:groupIdArray){
-			groupIdList.add(Integer.valueOf(groupIdString));
-		}
-		return groupIdList;
-	}
-	
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
 	public void deleteUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userId") Integer userId){
 		userSrv.removeUser(userId);

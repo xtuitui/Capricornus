@@ -2,6 +2,8 @@
 <%@include file="/WEB-INF/pages/common/common.jsp"%>
 <link type="text/css" rel="stylesheet" href="${path}/static/switch/css/switch.css"/>
 <link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/common/tooltip.css"/>
+<link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/common/modal.css"/>
+<link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/common/custom-table.css"/>
 <link type="text/css" rel="stylesheet" href="${path}/static/capricornus/css/user/management/user.css"/>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -101,16 +103,6 @@
 				}
 			});
 		}
-	}
-	
-	function modalButtonLoading(sureButtonId, cancelButtonId){
-		$("#"+cancelButtonId).hide().removeClass("am-modal-btn");
-		$("#"+sureButtonId).button("loading");
-	}
-	
-	function modalButtonReset(sureButtonId, cancelButtonId){
-		$("#"+sureButtonId).button("reset");
-		$("#"+cancelButtonId).addClass("am-modal-btn").show();
 	}
 	
 	function checkParamBeforeSubmit(){

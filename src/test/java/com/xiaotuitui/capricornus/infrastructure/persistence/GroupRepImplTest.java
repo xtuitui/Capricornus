@@ -22,6 +22,7 @@ public class GroupRepImplTest {
 	public void testQueryGroupByName(){
 		Group group = groupRep.queryGroupByName("capricornus-user");
 		System.out.println(group);
+		System.out.println(group.getSystemPermissions());
 	}
 	
 	@Test

@@ -1,3 +1,13 @@
+function modalButtonLoading(sureButtonId, cancelButtonId){
+	$("#"+cancelButtonId).hide().removeClass("am-modal-btn");
+	$("#"+sureButtonId).button("loading");
+}
+
+function modalButtonReset(sureButtonId, cancelButtonId){
+	$("#"+sureButtonId).button("reset");
+	$("#"+cancelButtonId).addClass("am-modal-btn").show();
+}
+
 function closeModal(obj, event) {
 	event = window.event || event;
 	if ($(event.target).attr("id") == $(obj).attr("id")) {
