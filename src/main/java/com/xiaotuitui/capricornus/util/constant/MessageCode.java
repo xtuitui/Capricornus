@@ -5,5 +5,7 @@ public class MessageCode {
 	public static final String USER_ALREADY_EXIST = "uae";
 	
 	public static final String GROUP_ALREADY_EXIST = "gae";
+	
+	public static final String CATEGORY_ALREADY_EXIST = "cae";
 
 }

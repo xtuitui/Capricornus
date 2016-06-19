@@ -370,7 +370,7 @@
 						</div>
 					</div>
 					<div class="am-form-group">
-						<label for="editDescription" class="am-u-sm-5 am-form-label">描述 / Description</label>
+						<label for="editGroupDescription" class="am-u-sm-5 am-form-label">描述 / Description</label>
 						<div class="am-u-sm-7 am-u-end">
 							<textarea id="editGroupDescription" placeholder="Description" maxlength="1000"></textarea>
 						</div>

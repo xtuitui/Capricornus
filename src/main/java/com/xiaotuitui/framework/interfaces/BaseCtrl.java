@@ -3,7 +3,6 @@ package com.xiaotuitui.framework.interfaces;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -22,37 +21,37 @@ public class BaseCtrl {
     public static final String DATA = "data";
     public static final String CONTENT_TYPE = "application/json";
     
-    protected void ajaxJson(String jsonString, HttpServletRequest request, HttpServletResponse response) {
-		ajax(jsonString, CONTENT_TYPE, request, response);
+    protected void ajaxJson(String jsonString, HttpServletResponse response) {
+		ajax(jsonString, CONTENT_TYPE, response);
 	}
     
-    protected void ajaxSuccess(HttpServletRequest request, HttpServletResponse response){
+    protected void ajaxSuccess(HttpServletResponse response){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, SUCCESS);
-    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, response);
     }
     
-    protected void ajaxError(HttpServletRequest request, HttpServletResponse response){
+    protected void ajaxError(HttpServletResponse response){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, ERROR);
-    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, response);
     }
     
-    protected void ajaxSuccessData(HttpServletRequest request, HttpServletResponse response, Object object){
+    protected void ajaxSuccessData(HttpServletResponse response, Object object){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, SUCCESS);
     	jsonObject.put(DATA, object);
-    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, response);
     }
     
-    protected void ajaxErrorData(HttpServletRequest request, HttpServletResponse response, Object object){
+    protected void ajaxErrorData(HttpServletResponse response, Object object){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, ERROR);
     	jsonObject.put(DATA, object);
-    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, response);
     }
     
-    protected void ajaxSuccessDataArray(HttpServletRequest request, HttpServletResponse response, Object... objectArray){
+    protected void ajaxSuccessDataArray(HttpServletResponse response, Object... objectArray){
     	JSONObject jsonObject = new JSONObject();
     	jsonObject.put(RESULT, SUCCESS);
     	JSONArray jsonArray = new JSONArray();
@@ -60,10 +59,10 @@ public class BaseCtrl {
     		jsonArray.add(object);
     	}
     	jsonObject.put(DATA, jsonArray);
-    	ajax(jsonObject.toString(), CONTENT_TYPE, request, response);
+    	ajax(jsonObject.toString(), CONTENT_TYPE, response);
     }
     
-    private void ajax(String content, String type, HttpServletRequest request, HttpServletResponse response) {
+    private void ajax(String content, String type, HttpServletResponse response) {
     	PrintWriter out = null;
 		try {
 			response.setContentType(type + ";charset=UTF-8");
@@ -81,9 +80,9 @@ public class BaseCtrl {
 	}
     
     @ExceptionHandler(value = {Exception.class})
-	protected void handleException(HttpServletRequest request, HttpServletResponse response, Exception exception){
+	protected void handleException(HttpServletResponse response, Exception exception){
     	exception.printStackTrace();
-    	ajaxError(request, response);
+    	ajaxError(response);
     }
     
 }

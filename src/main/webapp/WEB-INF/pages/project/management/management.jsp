@@ -7,14 +7,15 @@
 		<i class="menu_close am-icon-close am-icon-sm"></i>
 	</span>
 	<ul class="menu_items">
-		<li><a href="javascript:showDynamicContent('${path}/system/permission/toSystemPermission');"><i class="icon am-icon-lock am-icon-md"></i> System Permission</a></li>
+		<li><a href="javascript:showDynamicContent('${path}/project/project/toProject');"><i class="icon am-icon-database am-icon-md"></i> Project Management</a></li>
+		<li><a href="javascript:showDynamicContent('${path}/project/category/toCategory');"><i class="icon am-icon-binoculars am-icon-md"></i> Category Management</a></li>
 	</ul>
 	<div class="content">
 		<div id="dynamicContent" class="content_inner"></div>
 	</div>
 </div>
 <script type="text/javascript">
-	//showDynamicContent("${path}/user/management/toUser");
+	showDynamicContent("${path}/project/project/toProject");
 	$(window).resize(function(){
 		resetMenuToggleHeight();
 	});

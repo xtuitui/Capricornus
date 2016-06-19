@@ -55,17 +55,17 @@ public class UserManagementCtrl extends BaseCtrl{
 	}
 	
 	@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-	public void addUser(HttpServletRequest request, HttpServletResponse response, User user, @RequestParam(value = "invite") String invite){
+	public void addUser(HttpServletResponse response, User user, @RequestParam(value = "invite") String invite){
 		User checkUser = userSrv.queryUserByUsername(user.getUsername());
 		if(checkUser!=null){
-			ajaxErrorData(request, response, MessageCode.USER_ALREADY_EXIST);
+			ajaxErrorData(response, MessageCode.USER_ALREADY_EXIST);
 		}else{
 			initUserProfile(user);
 			if(Constant.TRUE.equalsIgnoreCase(invite)){
 				System.out.println("need to invite user...");
 			}
 			userSrv.createUser(user);
-			ajaxSuccess(request, response);
+			ajaxSuccess(response);
 		}
 	}
 	
@@ -79,16 +79,16 @@ public class UserManagementCtrl extends BaseCtrl{
 	}
 	
 	@RequestMapping(value = "/updateUserGroup", method = RequestMethod.POST)
-	public void updateUserGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
+	public void updateUserGroup(HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
 		List<Integer> groupIdList = ListUtil.convertStringArrayToIntegerList(StringUtils.split(groupIdStringList, ","));
 		userSrv.updateUserGroup(id, groupIdList);
-		ajaxSuccess(request, response);
+		ajaxSuccess(response);
 	}
 
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-	public void deleteUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userId") Integer userId){
+	public void deleteUser(HttpServletResponse response, @RequestParam(value = "userId") Integer userId){
 		userSrv.removeUser(userId);
-		ajaxSuccess(request, response);
+		ajaxSuccess(response);
 	}
 	
 	/**

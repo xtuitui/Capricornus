@@ -1,30 +1,6 @@
 <%@page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@include file="/WEB-INF/pages/common/common.jsp"%>
 <link type="text/css" rel="stylesheet" href="${path}/static/sidemenu/css/sidemenu.css"/>
-<script type="text/javascript">
-	function showDynamicContent(url){
-		$('.page').removeClass('shazam');
-		$("#loading").fadeIn(500);
-		$.get(url, {}, function(data){
-			$("#dynamicContent").html(data);
-			$("#loading").fadeOut(500);
-		});
-	}
-	
-	function resetMenuToggleHeight(){
-		var headerHeight;
-		if($("#phoneBar").is(":hidden")){
-			headerHeight = $("#header-toolbar").css("height");
-		}else{
-			headerHeight = $("#phoneBar").css("height");
-		}
-		var menuHeight = $(".menu_toggle").css("top");
-		if(menuHeight!=headerHeight){
-			$(".menu_toggle").css("top", headerHeight);
-			$("#dynamicContent").css("margin-top", headerHeight);
-		}
-	}
-</script>
 <div class="page">
 	  <span class="menu_toggle">
 	    <i class="menu_open am-icon-bars am-icon-sm"></i>

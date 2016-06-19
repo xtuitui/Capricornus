@@ -100,7 +100,7 @@
 		          			<span class="am-icon-cogs"></span> Setting <span class="am-icon-caret-down"></span>
 		        		</a>
 		        		<ul class="am-dropdown-content">
-							<li><a href="#"><span class="am-icon-database"></span> Project Management</a></li>
+							<li><a href="javascript:showDynamicBody('settingDropDown', '${path}/project/project/toProjectManagement');"><span class="am-icon-database"></span> Project Management</a></li>
 							<li><a href="javascript:showDynamicBody('settingDropDown', '${path}/user/management/toUserManagement');"><span class="am-icon-users"></span> User Management</a></li>
 							<li><a href="#"><span class="am-icon-gavel"></span> Project Configuration</a></li>
 							<li><a href="javascript:showDynamicBody('settingDropDown', '${path}/system/configuration/toSystemConfiguration');"><span class="am-icon-cog"></span> System Configuration</a></li>

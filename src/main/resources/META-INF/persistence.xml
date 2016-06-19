@@ -6,5 +6,6 @@
 		<class>com.xiaotuitui.capricornus.domain.model.User</class>
 		<class>com.xiaotuitui.capricornus.domain.model.Group</class>
 		<class>com.xiaotuitui.capricornus.domain.model.SystemPermission</class>
+		<class>com.xiaotuitui.capricornus.domain.model.Category</class>
 	</persistence-unit>
 </persistence>

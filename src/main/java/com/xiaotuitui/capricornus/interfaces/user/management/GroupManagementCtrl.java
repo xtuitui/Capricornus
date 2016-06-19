@@ -41,44 +41,44 @@ public class GroupManagementCtrl extends BaseCtrl{
 	}
 	
 	@RequestMapping(value = "/addGroup", method = RequestMethod.POST)
-	public void addGroup(HttpServletRequest request, HttpServletResponse response, Group group){
+	public void addGroup(HttpServletResponse response, Group group){
 		Group checkGroup = groupSrv.queryGroupByName(group.getName());
 		if(checkGroup!=null){
-			ajaxErrorData(request, response, MessageCode.GROUP_ALREADY_EXIST);
+			ajaxErrorData(response, MessageCode.GROUP_ALREADY_EXIST);
 		}else{
 			groupSrv.createGroup(group);
-			ajaxSuccess(request, response);
+			ajaxSuccess(response);
 		}
 	}
 	
 	@RequestMapping(value = "/deleteGroup", method = RequestMethod.POST)
-	public void deleteGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "groupId") Integer groupId){
+	public void deleteGroup(HttpServletResponse response, @RequestParam(value = "groupId") Integer groupId){
 		groupSrv.removeGroup(groupId);
-		ajaxSuccess(request, response);
+		ajaxSuccess(response);
 	}
 	
 	@RequestMapping(value = "/updateGroup", method = RequestMethod.POST)
-	public void updateGroup(HttpServletRequest request, HttpServletResponse response, Group group){
+	public void updateGroup(HttpServletResponse response, Group group){
 		Group checkGroup = groupSrv.queryGroupByName(group.getName());
 		if(checkGroup != null && ! checkGroup.getId().equals(group.getId())){
-			ajaxErrorData(request, response, MessageCode.GROUP_ALREADY_EXIST);
+			ajaxErrorData(response, MessageCode.GROUP_ALREADY_EXIST);
 		}else{
 			groupSrv.updateGroup(group);
-			ajaxSuccess(request, response);
+			ajaxSuccess(response);
 		}
 	}
 	
 	@RequestMapping(value = "/queryUserByGroup", method = RequestMethod.POST)
-	public void searchUserByGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id){
+	public void searchUserByGroup(HttpServletResponse response, @RequestParam(value = "id") Integer id){
 		List<User> userList = groupSrv.queryUserByGroup(id);
-		ajaxSuccessData(request, response, userList);
+		ajaxSuccessData(response, userList);
 	}
 	
 	@RequestMapping(value = "/updateGroupUser", method = RequestMethod.POST)
-	public void updateGroupUser(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "userIdStringList") String userIdStringList){
+	public void updateGroupUser(HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "userIdStringList") String userIdStringList){
 		List<Integer> userIdList = convertStringArrayToList(StringUtils.split(userIdStringList, ","));
 		groupSrv.updateGroupUser(id, userIdList);
-		ajaxSuccess(request, response);
+		ajaxSuccess(response);
 	}
 
 	private List<Integer> convertStringArrayToList(String[] userIdArray) {

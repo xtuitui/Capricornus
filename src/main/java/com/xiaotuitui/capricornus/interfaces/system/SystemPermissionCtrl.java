@@ -35,10 +35,10 @@ public class SystemPermissionCtrl extends BaseCtrl{
 	}
 
 	@RequestMapping(value = "/updateSystemPermissionGroup", method = RequestMethod.POST)
-	public void updateSystemPermissionGroup(HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
+	public void updateSystemPermissionGroup(HttpServletResponse response, @RequestParam(value = "id") Integer id, @RequestParam(value = "groupIdStringList") String groupIdStringList){
 		List<Integer> groupIdList = ListUtil.convertStringArrayToIntegerList(StringUtils.split(groupIdStringList, ","));
 		systemPermissionSrv.updateSystemPermissionGroup(id, groupIdList);
-		ajaxSuccess(request, response);
+		ajaxSuccess(response);
 	}
 	
 }

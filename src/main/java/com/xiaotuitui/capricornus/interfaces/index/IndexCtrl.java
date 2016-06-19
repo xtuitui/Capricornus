@@ -31,15 +31,15 @@ public class IndexCtrl extends BaseCtrl{
 	public void login(HttpServletRequest request, HttpSession session, HttpServletResponse response){
 		User user = userSrv.queryUserByUsername(request.getParameter("username"));
 		if(user==null){
-			ajaxError(request, response);
+			ajaxError(response);
 		}else{
 			String password = user.getPassword();
 			if(!password.equals(request.getParameter("password"))){
-				ajaxError(request, response);
+				ajaxError(response);
 			}else{
 				doSession(request, session, user);
 				doCookie(request, response, user);
-				ajaxSuccess(request, response);
+				ajaxSuccess(response);
 			}
 		}
 	}

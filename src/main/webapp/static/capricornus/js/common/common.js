@@ -22,3 +22,26 @@ function showTooltip(tooltipId, referenceTargetId, message, topOffset, leftOffse
 	});
 	setTimeout(function() {$("#"+tooltipId).fadeOut(1000);}, 1000);
 }
+
+function showDynamicContent(url){
+	$('.page').removeClass('shazam');
+	$("#loading").fadeIn(500);
+	$.get(url, {}, function(data){
+		$("#dynamicContent").html(data);
+		$("#loading").fadeOut(500);
+	});
+}
+
+function resetMenuToggleHeight(){
+	var headerHeight;
+	if($("#phoneBar").is(":hidden")){
+		headerHeight = $("#header-toolbar").css("height");
+	}else{
+		headerHeight = $("#phoneBar").css("height");
+	}
+	var menuHeight = $(".menu_toggle").css("top");
+	if(menuHeight!=headerHeight){
+		$(".menu_toggle").css("top", headerHeight);
+		$("#dynamicContent").css("margin-top", headerHeight);
+	}
+}

@@ -1,0 +1,29 @@
+.category-name {
+	font-size: 1.1em;
+	font-weight: bold;
+}
+
+.category-description {
+	font-size: .9em;
+}
+
+.category-title {
+	border: .2rem solid green;
+	border-radius: 10px;
+	box-shadow: 1px 1px 5px 1px green;
+	background-color: rgba(224, 242, 177, 0.89);
+	margin-bottom: 20px;
+}
+
+.category-margin {
+	margin-top: 20px;
+}
+
+.am-table tbody tr:hover {
+	background-color: #FFD;
+}
+
+.am-form textarea{
+	height: 150px;
+	resize: none;
+}
