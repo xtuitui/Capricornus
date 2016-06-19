@@ -12,9 +12,9 @@ import org.springframework.stereotype.Repository;
 
 import com.xiaotuitui.capricornus.domain.model.Group;
 import com.xiaotuitui.capricornus.domain.repository.GroupRep;
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.infrastructure.persistence.JPABaseRepImpl;
-import com.xiaotuitui.framework.util.page.PageObject;
 
 @Repository
 public class GroupRepImpl extends JPABaseRepImpl<Group> implements GroupRep{

@@ -10,11 +10,11 @@ import javax.persistence.Query;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.framework.domain.model.SqlParameters;
 import com.xiaotuitui.framework.domain.repository.JPABaseRep;
 import com.xiaotuitui.framework.exception.SysException;
 import com.xiaotuitui.framework.util.beanutil.ReflectUtil;
-import com.xiaotuitui.framework.util.page.PageObject;
 
 public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 

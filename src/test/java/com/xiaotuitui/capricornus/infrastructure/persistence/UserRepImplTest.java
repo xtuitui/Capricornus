@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
-import com.xiaotuitui.framework.util.page.PageObject;
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.testframework.EntityUtil;
 
 @ContextConfiguration(locations={"file:src/main/resources/spring/applicationContext.xml"})

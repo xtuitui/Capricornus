@@ -12,7 +12,7 @@ import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.GroupRep;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
-import com.xiaotuitui.framework.util.page.PageObject;
+import com.xiaotuitui.framework.domain.model.PageObject;
 
 @Service
 public class UserSrvImpl implements UserSrv{

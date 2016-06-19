@@ -3,8 +3,8 @@ package com.xiaotuitui.framework.domain.repository;
 import java.io.Serializable;
 import java.util.List;
 
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.framework.domain.model.SqlParameters;
-import com.xiaotuitui.framework.util.page.PageObject;
 
 public interface JPABaseRep<T>{
 	

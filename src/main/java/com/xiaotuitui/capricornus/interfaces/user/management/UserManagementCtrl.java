@@ -20,9 +20,9 @@ import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.util.constant.Constant;
 import com.xiaotuitui.capricornus.util.constant.MessageCode;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.framework.interfaces.BaseCtrl;
 import com.xiaotuitui.framework.util.list.ListUtil;
-import com.xiaotuitui.framework.util.page.PageObject;
 
 @Controller
 @RequestMapping(value = "/user/management")

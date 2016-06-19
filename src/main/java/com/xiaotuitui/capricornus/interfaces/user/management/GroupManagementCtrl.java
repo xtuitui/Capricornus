@@ -17,8 +17,8 @@ import com.xiaotuitui.capricornus.application.GroupSrv;
 import com.xiaotuitui.capricornus.domain.model.Group;
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.util.constant.MessageCode;
+import com.xiaotuitui.framework.domain.model.PageObject;
 import com.xiaotuitui.framework.interfaces.BaseCtrl;
-import com.xiaotuitui.framework.util.page.PageObject;
 
 @Controller
 @RequestMapping(value = "/user/management")

@@ -1,4 +1,4 @@
-package com.xiaotuitui.framework.util.page;
+package com.xiaotuitui.framework.domain.model;
 
 public class PageObject {
 	

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.util.dto.UserDto;
-import com.xiaotuitui.framework.util.page.PageObject;
+import com.xiaotuitui.framework.domain.model.PageObject;
 
 public interface UserSrv {
 	

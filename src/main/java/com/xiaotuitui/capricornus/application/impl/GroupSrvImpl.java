@@ -12,7 +12,7 @@ import com.xiaotuitui.capricornus.domain.model.Group;
 import com.xiaotuitui.capricornus.domain.model.User;
 import com.xiaotuitui.capricornus.domain.repository.GroupRep;
 import com.xiaotuitui.capricornus.domain.repository.UserRep;
-import com.xiaotuitui.framework.util.page.PageObject;
+import com.xiaotuitui.framework.domain.model.PageObject;
 
 @Service
 public class GroupSrvImpl implements GroupSrv{
