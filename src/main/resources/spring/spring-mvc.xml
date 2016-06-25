@@ -9,27 +9,41 @@
 		http://www.springframework.org/schema/mvc 
 		http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 		
-	<mvc:annotation-driven />
-	
-	<mvc:default-servlet-handler/>
-	
 	<!-- Auto Scan Controller -->
 	<context:component-scan base-package="com.xiaotuitui.capricornus.interfaces" />
-
-	<!-- Avoid IE Execute AJAX, then Download JSON -->
+		
+	<!-- <mvc:annotation-driven />  Deprecated  -->
+	<!-- AnnotationMethodHandlerAdapter  Deprecated  -->
+	
+	<!-- Spring MVC Annotation -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringHttpMessageConverter" />
+				<ref bean="mappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Default Servlet Handler (HTML CSS JS) -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- Avoid IE Execute AJAX, then Download JSON (Message Converter) -->
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>text/html;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
 			</list>
 		</property>
 	</bean>
-
-	<!-- Spring MVC Annotation -->
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-		<property name="messageConverters">
+	
+	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
 			<list>
-				<ref bean="mappingJacksonHttpMessageConverter" />
+				<value>text/html;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
 			</list>
 		</property>
 	</bean>

@@ -92,9 +92,9 @@ dependencies {
     //compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
     
     //jackson(fasterxml)
-    //compile "com.fasterxml.jackson.core:jackson-core:2.7.3"
-    //compile "com.fasterxml.jackson.core:jackson-databind:2.7.3"
-    //compile "com.fasterxml.jackson.core:jackson-annotations:2.7.3"
+    testCompile "com.fasterxml.jackson.core:jackson-core:2.6.7"
+    testCompile "com.fasterxml.jackson.core:jackson-databind:2.6.7"
+    testCompile "com.fasterxml.jackson.core:jackson-annotations:2.6.7"
     
     //StringUtils
     compile "commons-lang:commons-lang:2.6"
