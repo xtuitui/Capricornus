@@ -59,7 +59,7 @@ public class EntityUtil {
      * @param fields    fields form target entity
      * @param seq      the sequence of entity
      * */
-    private static void setField(Object object,Field[] fields , int seq) throws IllegalArgumentException, IllegalAccessException{
+    private static void setField(Object object, Field[] fields, int seq) throws IllegalArgumentException, IllegalAccessException{
         for(Field field:fields){
             if(Modifier.isStatic(field.getModifiers())){
                 continue;
@@ -74,9 +74,9 @@ public class EntityUtil {
             }else if(field.getType().equals(Long.class)){
             	field.set(object, Long.valueOf(seq));
             }else if(field.getType().equals(Double.class)){
-                field.set(object, seq+0.1*seq);
+                field.set(object, seq + 0.1 * seq);
             }else if(field.getType().equals(Boolean.class)){
-                field.set(object, seq%2==0);
+                field.set(object, seq % 2==0);
             }
         }
     }

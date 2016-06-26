@@ -25,7 +25,7 @@ public class UserRepImplTest{
 	private UserRep userRep;
 	
 	@Before
-	public void setup(){
+	public void setUp(){
 		System.out.println("setup...");
 	}
 	
