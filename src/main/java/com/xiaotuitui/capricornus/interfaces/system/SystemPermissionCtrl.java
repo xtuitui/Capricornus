@@ -28,7 +28,7 @@ public class SystemPermissionCtrl extends BaseCtrl{
 	private GroupSrv groupSrv;
 	
 	@RequestMapping(value = "/toSystemPermission", method = RequestMethod.GET)
-	public String toUser(HttpServletRequest request){
+	public String toSystemPermission(HttpServletRequest request){
 		request.setAttribute("systemPermissionList", systemPermissionSrv.queryAllSystemPermission());
 		request.setAttribute("groupList", groupSrv.queryAllGroup());
 		return "/system/permission/permission";
