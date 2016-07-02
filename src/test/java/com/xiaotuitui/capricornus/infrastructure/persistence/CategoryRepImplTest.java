@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import org.dbunit.Assertion;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.dataset.Column;
+import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.datatype.DataType;
@@ -66,7 +67,7 @@ public class CategoryRepImplTest {
 		List<Category> categories = categoryRep.queryAllCategory();
 		ITable expectedTable = dataSet.getTable(table);
 		ITable actualTable = DBUnitUtil.getDbunitDataSetByEntityList(categories, table).getTable(table);
-		Assertion.assertEquals(expectedTable, actualTable, additionalColumnInfo);
+		Assertion.assertEquals(includeColumn(expectedTable), includeColumn(actualTable));
 	}
 	
 	@Test
@@ -87,7 +88,7 @@ public class CategoryRepImplTest {
 		categoryRep.createCategory(category);
 		ITable expectedTable = DBUnitUtil.getDbunitDataSetByEntity(category, table).getTable(table);
 		ITable actualTable = DBUnitUtil.getDBUnitConnection(getUnwarpConnection()).createDataSet().getTable(table);
-		Assertion.assertEquals(expectedTable, actualTable, additionalColumnInfo);
+		Assertion.assertEquals(includeColumn(expectedTable), includeColumn(actualTable));
 	}
 	
 	@Test
@@ -109,7 +110,11 @@ public class CategoryRepImplTest {
 		entityManager.flush();
 		ITable expectedTable = DBUnitUtil.getDbunitDataSetByEntityList(EntityUtil.createEntityList(Category.class, 3), table).getTable(table);
 		ITable actualTable = DBUnitUtil.getDBUnitConnection(getUnwarpConnection()).createDataSet().getTable(table);
-		Assertion.assertEquals(expectedTable, actualTable, additionalColumnInfo);
+		Assertion.assertEquals(includeColumn(expectedTable), includeColumn(actualTable));
+	}
+	
+	private static ITable includeColumn(ITable table) throws DataSetException{
+		return DBUnitUtil.includeColumnTable(table, additionalColumnInfo);
 	}
 	
 	private static Column[] buildAdditionalColumnInfo(){

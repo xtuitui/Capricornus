@@ -26,6 +26,8 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
+import org.dbunit.dataset.ITable;
+import org.dbunit.dataset.filter.DefaultColumnFilter;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlProducer;
 import org.dbunit.ext.db2.Db2DataTypeFactory;
@@ -306,6 +308,14 @@ public class DBUnitUtil {
 		}
     }
     
+    /**
+     * Include Column
+     * @return
+     * @throws DataSetException 
+     */
+    public static ITable includeColumnTable(ITable table, org.dbunit.dataset.Column[] additionalColumnInfo) throws DataSetException{
+		return DefaultColumnFilter.includedColumnsTable(table, additionalColumnInfo);
+	}
     
     public static void closeConnection(){
     	closeDBunitDatabaseConnection(databaseConnection);

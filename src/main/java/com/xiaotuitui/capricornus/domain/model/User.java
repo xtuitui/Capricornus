@@ -59,9 +59,9 @@ public class User {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
-			name = "tcs_user_group", 
-			joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
-			inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+		name = "tcs_user_group", 
+		joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, 
+		inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
 	)
 	@OrderBy(value = "id asc")
 	@JSONField(serialize = false)

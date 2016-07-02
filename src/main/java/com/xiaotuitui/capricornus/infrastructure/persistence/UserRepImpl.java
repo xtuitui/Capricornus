@@ -36,10 +36,6 @@ public class UserRepImpl extends JPABaseRepImpl<User> implements UserRep{
 		return super.namedQueryFirstResult(sqlParameters);
 	}
 
-	public void deleteUser(User user) {
-		super.remove(user);
-	}
-
 	public List<User> queryUserByNickname(String nickname) {
 		SqlParameters sqlParameters = new SqlParameters("User.queryUserByNickname", new String[]{"nickname"}, new Object[]{"%"+nickname+"%"});
 		return super.namedQuery(sqlParameters);

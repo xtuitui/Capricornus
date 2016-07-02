@@ -12,8 +12,6 @@ public interface UserRep {
 	
 	public User queryUserByUsername(String username);
 	
-	public void deleteUser(User user);
-	
 	public List<User> queryUserByNickname(String nickname);
 	
 	public User createUser(User user);

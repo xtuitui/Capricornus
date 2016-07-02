@@ -37,7 +37,7 @@ public class UserSrvImpl implements UserSrv{
 	public void deleteUser(User user) {
 		User originalUser = userRep.queryUserByUsername(user.getUsername());
 		if(originalUser!=null){
-			userRep.deleteUser(originalUser);
+			userRep.removeUser(originalUser);
 		}
 	}
 
