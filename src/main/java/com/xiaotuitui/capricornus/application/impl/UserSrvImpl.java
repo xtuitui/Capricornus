@@ -33,14 +33,6 @@ public class UserSrvImpl implements UserSrv{
 		return userRep.queryUserByUsername(username);
 	}
 
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-	public void deleteUser(User user) {
-		User originalUser = userRep.queryUserByUsername(user.getUsername());
-		if(originalUser!=null){
-			userRep.removeUser(originalUser);
-		}
-	}
-
 	@Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
 	public List<User> queryUserByNickname(String nickname) {
 		return userRep.queryUserByNickname(nickname);
