@@ -105,7 +105,7 @@ public class UserSrvImplTest {
 		Mockito.when(userRep.loadUser(user.getId())).thenReturn(user);
 		Mockito.when(groupRep.loadGroup(group.getId())).thenReturn(group);
 		
-		List<Integer> groupIdList = Arrays.asList(new Integer[]{user.getId(), user.getId(), user.getId()});
+		List<Integer> groupIdList = Arrays.asList(new Integer[]{group.getId(), group.getId(), group.getId()});
 		userSrv.updateUserGroup(user.getId(), groupIdList);
 		
 		Mockito.verify(userRep).loadUser(user.getId());
@@ -113,7 +113,7 @@ public class UserSrvImplTest {
 		for(int i=0;i<groupIdList.size();i++){
 			expectedGroupList.add(group);
 		}
-		Mockito.verify(groupRep, Mockito.times(groupIdList.size())).loadGroup(user.getId());
+		Mockito.verify(groupRep, Mockito.times(groupIdList.size())).loadGroup(group.getId());
 		List<Group> actualGroupList = user.getGroups();
 		Assert.assertEquals(expectedGroupList, actualGroupList);
 	}
