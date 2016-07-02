@@ -39,9 +39,9 @@ public class SystemPermission {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
-			name = "tcs_system_permission_group",
-			joinColumns = {@JoinColumn(name = "system_permission_id", referencedColumnName = "id")},
-			inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
+		name = "tcs_system_permission_group",
+		joinColumns = {@JoinColumn(name = "system_permission_id", referencedColumnName = "id")},
+		inverseJoinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")}
 	)
 	@OrderBy(value = "id asc")
 	private List<Group> groups;

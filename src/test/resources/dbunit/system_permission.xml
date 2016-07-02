@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dataset>
+     <tcs_system_permission id="1" permission_key="permissionKey1" name="name1" description="description1" />
+     <tcs_system_permission id="2" permission_key="permissionKey2" name="name2" description="description2" />
+     <tcs_system_permission id="3" permission_key="permissionKey3" name="name3" description="description3" />
+     <tcs_system_permission id="4" permission_key="permissionKey4" name="name4" description="description4" />
+</dataset>
