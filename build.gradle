@@ -62,14 +62,21 @@ dependencies {
     compile "org.springframework:spring-context:${spring.version}"
     compile "org.springframework:spring-context-support:${spring.version}"
     compile "org.springframework:spring-tx:${spring.version}"
+    compile "org.springframework:spring-aspects:${spring.version}"
     compile "org.springframework:spring-web:${spring.version}"
     compile "org.springframework:spring-webmvc:${spring.version}"
+    //compile "org.springframework:spring-webmvc-portlet:${spring.version}"
+    //compile "org.springframework:spring-websocket:${spring.version}"
     compile "org.springframework:spring-jdbc:${spring.version}"
     compile "org.springframework:spring-orm:${spring.version}"
+    compile "org.springframework:spring-oxm:${spring.version}"
+    //compile "org.springframework:spring-instrument:${spring.version}"
+    //compile "org.springframework:spring-instrument-tomcat:${spring.version}"
+    //compile "org.springframework:spring-jms:${spring.version}"
     testCompile "org.springframework:spring-test:${spring.version}"
     
     //aspectj
-    compile "org.aspectj:aspectjweaver:1.8.6"
+    //compile "org.aspectj:aspectjweaver:1.8.6"
     
     //Hibernate For JPA
     compile "org.hibernate:hibernate-entitymanager:${hibernate.version}"
