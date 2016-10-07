@@ -260,33 +260,35 @@
 					</c:forEach>
 					
 					<!-- None Category -->
-					<tr class="category-name">
-						<td colspan="3">
-							<div class="am-cf am-padding am-padding-bottom-0">
-								<div class="am-fl am-cf">
-									<strong class="am-text-warning am-text-lg">[Category] - None Category</strong>
+					<c:if test="${!empty noneCategoryProjectList}">
+						<tr class="category-name">
+							<td colspan="3">
+								<div class="am-cf am-padding am-padding-bottom-0">
+									<div class="am-fl am-cf">
+										<strong class="am-text-warning am-text-lg">[Category] - None Category</strong>
+									</div>
 								</div>
-							</div>
-						</td>
-					</tr>
-					<c:forEach var="project" items="${noneCategoryProjectList}">
-						<tr>
-							<td><a href="#"><span id="projectNameSpan${project.id}" class="project-name">${project.name}</span></a><br/><span id="projectKeySpan${project.id}" class="project-key">${project.projectKey}</span><input id="projectCategoryHidden${project.id}" type="hidden"/></td>
-							<td><span id="projectDescriptionSpan${project.id}" class="project-description">${project.description}</span></td>
-							<td class="am-text-middle">
-			        			<div class="am-btn-toolbar">
-			        				<div class="am-btn-group am-btn-group-xs">
-			        					<button class="am-btn am-btn-default am-btn-xs am-text-secondary" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showEditProjectModal(${project.id}, this);">
-											<span class="am-icon-pencil-square-o"></span> Edit
-										</button>
-										<button class="am-btn am-btn-default am-btn-xs am-text-danger" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showDeleteProjectModal(${project.id}, this);">
-											<span class="am-icon-trash-o"></span> Delete
-										</button>
-			        				</div>
-			        			</div>
-			        		</td>
+							</td>
 						</tr>
-					</c:forEach>
+						<c:forEach var="project" items="${noneCategoryProjectList}">
+							<tr>
+								<td><a href="#"><span id="projectNameSpan${project.id}" class="project-name">${project.name}</span></a><br/><span id="projectKeySpan${project.id}" class="project-key">${project.projectKey}</span><input id="projectCategoryHidden${project.id}" type="hidden"/></td>
+								<td><span id="projectDescriptionSpan${project.id}" class="project-description">${project.description}</span></td>
+								<td class="am-text-middle">
+				        			<div class="am-btn-toolbar">
+				        				<div class="am-btn-group am-btn-group-xs">
+				        					<button class="am-btn am-btn-default am-btn-xs am-text-secondary" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showEditProjectModal(${project.id}, this);">
+												<span class="am-icon-pencil-square-o"></span> Edit
+											</button>
+											<button class="am-btn am-btn-default am-btn-xs am-text-danger" data-am-loading="{spinner:'spinner', loadingText:'Showing...'}" onclick="showDeleteProjectModal(${project.id}, this);">
+												<span class="am-icon-trash-o"></span> Delete
+											</button>
+				        				</div>
+				        			</div>
+				        		</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 					
 				</tbody>
 			</table>

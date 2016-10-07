@@ -197,30 +197,49 @@ public abstract class JPABaseRepImpl<T> implements JPABaseRep<T>{
 	}
 	
 	private StringBuilder buildCountSql(StringBuilder sql) {
+		String sqlWithoutOrder = removeOrder(sql.toString());
+		String queryScalar = getQueryScalar(sqlWithoutOrder);
+		String queryForm = getQueryFrom(sqlWithoutOrder);
+		String queryCondition = getQueryCondition(sqlWithoutOrder);
+		return new StringBuilder("select count(" + queryScalar + ") " + queryForm + queryCondition);
+	}
+	
+	private String getQueryFrom(String sqlWithoutOrder) {
+		int beginIndexFrom = sqlWithoutOrder.indexOf("from");
+		int beginIndexWhere = sqlWithoutOrder.indexOf("where");
+		if (beginIndexWhere != -1){
+			return sqlWithoutOrder.substring(beginIndexFrom, beginIndexWhere);
+		}else{
+			return sqlWithoutOrder.substring(beginIndexFrom);
+		}
+	}
+
+	private String getQueryCondition(String sql) {
+		int beginIndexWhere = sql.indexOf("where");
+		if (beginIndexWhere != -1) {
+			String sqlWhereRear = sql.substring(beginIndexWhere).replaceAll("1=1 and", "").replaceAll("1=1", "").trim();
+			if (sqlWhereRear.length() != "where".length()){
+				return sqlWhereRear;
+			}
+		}
+		return "";
+	}
+
+	private String getQueryScalar(String sql) {
 		int beginIndexFrom = sql.indexOf("from");
 		String sqlFromEx = sql.substring(0, beginIndexFrom).replaceAll("select", "").trim();
 		if(StringUtils.isBlank(sqlFromEx)){
-			sqlFromEx = "*";
+			sqlFromEx = "1";
 		}
-		String sqlWhereRear = "";
-		int beginIndexWhere = sql.indexOf("where");
-		if (beginIndexWhere != -1) {
-			sqlWhereRear = sql.substring(beginIndexWhere).replaceAll("1=1 and", "").replaceAll("1=1", "").trim();
-			int beginIndexOrderBy = sqlWhereRear.indexOf("order by");
-			if (beginIndexOrderBy != -1){
-				sqlWhereRear = sqlWhereRear.substring(0, beginIndexOrderBy).trim();
-			}
-			if (sqlWhereRear.length() == "where".length()){
-				sqlWhereRear = "";
-			}
+		return sqlFromEx;
+	}
+
+	private String removeOrder(String sql){
+		int beginIndexOrderBy = sql.indexOf("order by");
+		if (beginIndexOrderBy != -1){
+			return sql.substring(0, beginIndexOrderBy).trim();
 		}
-		String sqlFromWhere = "";
-		if (beginIndexWhere != -1){
-			sqlFromWhere = sql.substring(beginIndexFrom, beginIndexWhere);
-		}else{
-			sqlFromWhere = sql.substring(beginIndexFrom);
-		}
-		return new StringBuilder("select count(" + sqlFromEx + ") " + sqlFromWhere + sqlWhereRear);
+		return sql;
 	}
 
 }
