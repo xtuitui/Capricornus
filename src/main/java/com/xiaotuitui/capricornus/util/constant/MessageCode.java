@@ -8,4 +8,8 @@ public class MessageCode {
 	
 	public static final String CATEGORY_ALREADY_EXIST = "cae";
 
+	public static final String PROJECT_ALREADY_EXIST = "pae";
+
+	public static final String PROJECT_KEY_ALREADY_EXIST = "pkae";
+
 }

@@ -7,5 +7,6 @@
 		<class>com.xiaotuitui.capricornus.domain.model.Group</class>
 		<class>com.xiaotuitui.capricornus.domain.model.SystemPermission</class>
 		<class>com.xiaotuitui.capricornus.domain.model.Category</class>
+		<class>com.xiaotuitui.capricornus.domain.model.Project</class>
 	</persistence-unit>
 </persistence>

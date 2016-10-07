@@ -78,11 +78,109 @@
 		$("#deleteCategoryName").html($("#categoryNameSpan"+categoryId).html());
 		$("#deleteCategoryModal").modal({
 			"onConfirm": function(){
-				deleteCategory();
+				checkDependencyAndDelete();
 			}, 
 			"closeOnConfirm": false
 		});
 		$(obj).button("reset");
+	}
+	
+	function checkDependencyAndDelete(){
+		modalButtonLoading("deleteCategoryButton", "cancelDeleteButton");
+		var categoryId = $("#deleteCategoryId").val();
+		$.post("${path}/project/category/checkProjectCategoryDependency", {"id":categoryId}, function(data){
+			if(data.result=="success"){
+				var projectList = data.data;
+				if(projectList.length>0){
+					$("#deleteCategoryModal").modal("close");
+					showUpdateProjectCategoryModal(categoryId, projectList);
+				}else{
+					deleteCategory();
+				}
+			}else{
+				alert("拉取Project数据出错");
+			}
+			modalButtonReset("deleteCategoryButton", "cancelDeleteButton");
+		});
+	}
+	
+	function showUpdateProjectCategoryModal(categoryId, projectList){
+		var categoryName = $("#categoryNameSpan"+categoryId).html();
+		$("#pcCategoryName").html(categoryName);
+		var htmlStr = "";
+		for(var i=0;i<projectList.length;i++){
+			var projectName = projectList[i].name;
+			var projectId = projectList[i].id;
+			htmlStr += createProjectCategoryDiv(projectId, projectName);
+		}
+		$("#projectCategoryForm").html(htmlStr);
+
+		$("#projectCategoryForm .select2").select2({
+			width: "100%" ,
+			maximumInputLength: 20 ,
+		});
+		
+		$("#projectCategoryModal").modal({
+			"width": "800",
+			"onConfirm": function(){
+				updateProjectCategory();
+			}, 
+			"closeOnConfirm": false
+		});
+	}
+	
+	function updateProjectCategory(){
+		$.ajax({
+			url:"${path}/project/category/updateProjectCategory",
+			type:"post",
+			async:true,
+			data:$("#projectCategoryForm").serialize(),
+			cache:false,
+			dataType:"json",
+			success:function(data){
+				if(data.result=="success"){
+					deleteCategory();
+					$("#projectCategoryModal").modal("close");
+				}else{
+					alert("更新项目分类出错");
+				}
+			},
+			error:function(){
+				alert("更新项目分类出错");
+			}
+		});
+	}
+	
+	function createProjectCategoryDiv(projectId, projectName){
+		var htmlStr = "<div class='am-form-group'><div class='am-u-sm-4'>";
+		htmlStr += "<input type='text' readonly='readonly' value='"+projectName+"'/>";
+		htmlStr += "<input type='hidden' name='projectIds' value='"+projectId+"'/></div>";
+		htmlStr += "<div class='am-u-sm-4 project-category-line'>----------------------------></div>";
+		htmlStr += "<div class='am-u-sm-4 am-u-end'>";
+		htmlStr += createCategorySelect();
+		htmlStr += "</div></div>";
+		return htmlStr;
+	}
+	
+	function createCategorySelect(){
+		var htmlStr = "<select name='categoryIds' class='am-radius select2'>";
+		htmlStr += createCategorySelectOption();
+		htmlStr += "</select>";
+		return htmlStr;
+	}
+	
+	function createCategorySelectOption(){
+		var deleteCategoryId = $("#deleteCategoryId").val();
+		var optionHtml = "<option value='' selected='selected'>None Category</option>";
+		$("span.category-name").each(function(){
+			var categoryId = $(this).attr("id").substr("categoryNameSpan".length);
+			if(categoryId == deleteCategoryId){
+				return true;
+			}
+			var categoryName = $(this).html();
+			optionHtml += "<option value='"+categoryId+"'>"+categoryName+"</option>";
+		});
+		return optionHtml;
 	}
 	
 	function deleteCategory(){
@@ -274,7 +372,6 @@
 	</div>
 </div>
 
-
 <div id="editCategoryModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
 	<div class="am-modal-dialog">
 		<div class="am-modal-hd">
@@ -311,6 +408,38 @@
 			<span id="editCategoryButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
 		</div>
 		<div id="editVldTooltip" class="vld-tooltip"></div>
+	</div>
+</div>
+
+<div id="projectCategoryModal" class="am-modal am-modal-no-btn" tabindex="-1" onclick="closeModal(this, event);">
+	<div class="am-modal-dialog">
+		<div class="am-modal-hd">
+			批量更新项目分类
+			<a href="javascript:;" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+		</div>
+		<hr/>
+		<div class="modal-description">
+			<div>&nbsp;&nbsp;欢迎使用Capricornus!<br/>&nbsp;&nbsp;该分类 - [<span id="pcCategoryName"></span>]即将删除, 请重新分配以下项目的分类. <br/>&nbsp;&nbsp;谢谢支持...</div>
+		</div>
+		<hr/>
+		<div class="am-modal-bd">
+			<div class="am-u-sm-12 am-u-end update-project-category-title-div">
+				<div class="am-form-group">
+					<div class="am-u-sm-4 update-project-category-title">Project</div>
+					<div class="am-u-sm-4">&nbsp;</div>
+					<div class="am-u-sm-4 am-u-end update-project-category-title">Category</div>
+				</div>
+			</div>
+			<div class="am-u-sm-12 am-u-end" style="position: relative;left: 0px;">
+				<form id="projectCategoryForm" class="am-form am-form-horizontal form-radius"></form>
+			</div>
+		</div>
+		<hr class="footer-hr"/>
+		<div class="am-modal-footer">
+			<span id="cancelUpdatePCButton" class="am-modal-btn" data-am-modal-cancel>取消</span>
+			<span id="updatePCButton" class="am-modal-btn" data-am-modal-confirm data-am-loading="{spinner:'spinner', loadingText:'Please Waiting...'}">确定</span>
+		</div>
+		<div id="updatePCVldTooltip" class="vld-tooltip"></div>
 	</div>
 </div>
 

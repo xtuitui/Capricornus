@@ -1,13 +1,14 @@
-.category-name {
+.project-name {
 	font-size: 1.1em;
 	font-weight: bold;
+	color: blue;
 }
 
-.category-description {
+.project-description, .project-key {
 	font-size: .9em;
 }
 
-.category-title {
+.project-title {
 	border: .2rem solid green;
 	border-radius: 10px;
 	box-shadow: 1px 1px 5px 1px green;
@@ -15,7 +16,7 @@
 	margin-bottom: 20px;
 }
 
-.category-margin {
+.project-margin {
 	margin-top: 20px;
 }
 
@@ -28,24 +29,10 @@
 	resize: none;
 }
 
-.project-category-line{
-	font-weight: bold;
-	color: green;
-}
-
-.update-project-category-title-div{
-	position: relative;
-	left: 0px;
-	margin-top: -15px;
-	margin-bottom: 10px;
-}
-
-.update-project-category-title{
-	font-weight: bold;
-	font-size: large;
-	color: green;
-}
-
 .am-modal .select2, .am-modal-bd .select2{
 	text-align: left;
+}
+
+.am-table tbody tr.category-name{
+	background-color: #F0F0F0;
 }

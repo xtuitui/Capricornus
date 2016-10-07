@@ -16,4 +16,8 @@ public interface CategorySrv {
 
 	public void updateCategory(Category category);
 
+	public Category loadCategory(Integer id);
+
+	public void updateProjectCategory(List<Integer> projectIds, List<Integer> categoryIds);
+
 }

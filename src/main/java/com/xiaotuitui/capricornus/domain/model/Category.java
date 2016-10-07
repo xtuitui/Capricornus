@@ -1,12 +1,16 @@
 package com.xiaotuitui.capricornus.domain.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -29,6 +33,9 @@ public class Category {
 	
 	@Column(name = "description")
 	private String description;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+	private List<Project> projects;
 
 	public Integer getId() {
 		return id;
@@ -52,6 +59,14 @@ public class Category {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
 	}
 
 	public String toString() {

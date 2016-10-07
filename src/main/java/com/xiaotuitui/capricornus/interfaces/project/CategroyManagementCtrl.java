@@ -1,5 +1,7 @@
 package com.xiaotuitui.capricornus.interfaces.project;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.xiaotuitui.capricornus.application.CategorySrv;
 import com.xiaotuitui.capricornus.domain.model.Category;
+import com.xiaotuitui.capricornus.domain.model.Project;
 import com.xiaotuitui.capricornus.util.constant.MessageCode;
 import com.xiaotuitui.framework.interfaces.BaseCtrl;
 
@@ -29,13 +32,17 @@ public class CategroyManagementCtrl extends BaseCtrl{
 	
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public void addCategory(HttpServletResponse response, Category category){
-		Category checkCategory = categorySrv.queryCategoryByName(category.getName());
-		if(checkCategory!=null){
-			ajaxErrorData(response, MessageCode.CATEGORY_ALREADY_EXIST);
-		}else{
+		if(validateCategory(response, category)){
 			categorySrv.createCategory(category);
 			ajaxSuccess(response);
 		}
+	}
+	
+	@RequestMapping(value = "/checkProjectCategoryDependency", method = RequestMethod.POST)
+	public void checkProjectCategoryDependency(HttpServletResponse response, Category category){
+		category = categorySrv.loadCategory(category.getId());
+		List<Project> projectList = category.getProjects();
+		ajaxSuccessData(response, projectList);
 	}
 	
 	@RequestMapping(value = "/deleteCategory", method = RequestMethod.POST)
@@ -46,13 +53,25 @@ public class CategroyManagementCtrl extends BaseCtrl{
 	
 	@RequestMapping(value = "/updateCategory", method = RequestMethod.POST)
 	public void updateCategory(HttpServletResponse response, Category category){
-		Category checkCategory = categorySrv.queryCategoryByName(category.getName());
-		if(checkCategory != null && ! checkCategory.getId().equals(category.getId())){
-			ajaxErrorData(response, MessageCode.CATEGORY_ALREADY_EXIST);
-		}else{
+		if(validateCategory(response, category)){
 			categorySrv.updateCategory(category);
 			ajaxSuccess(response);
 		}
+	}
+	
+	private boolean validateCategory(HttpServletResponse response, Category category){
+		Category checkCategory = categorySrv.queryCategoryByName(category.getName());
+		if(checkCategory != null && ! checkCategory.getId().equals(category.getId())){
+			ajaxErrorData(response, MessageCode.CATEGORY_ALREADY_EXIST);
+			return false;
+		}
+		return true;
+	}
+	
+	@RequestMapping(value = "/updateProjectCategory", method = RequestMethod.POST)
+	public void updateProjectCategory(HttpServletResponse response, @RequestParam(value = "projectIds") List<Integer> projectIds, @RequestParam(value = "categoryIds") List<Integer> categoryIds){
+		categorySrv.updateProjectCategory(projectIds, categoryIds);
+		ajaxSuccess(response);
 	}
 	
 }
